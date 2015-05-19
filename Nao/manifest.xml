@@ -1,31 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<<<<<<< HEAD
-<package uuid="nao-7de88e">
- <names>
-  <name lang="en_US">Nao</name>
- </names>
- <supportedLanguages>
-  <language>en_US</language>
- </supportedLanguages>
- <descriptionLanguages>
-  <language>en_US</language>
- </descriptionLanguages>
- <contents>
-  <behaviorContent path="behavior_1">
-   <nature>interactive</nature>
-   <permissions/>
-  </behaviorContent>
-<<<<<<< HEAD
-  <behaviorContent path="Benjamin/Nao Zedong">
-=======
-  <behaviorContent path="Wlad/BehaviorWlad">
->>>>>>> Création directory Perso Wlad
-   <nature>interactive</nature>
-   <permissions/>
-  </behaviorContent>
- </contents>
-=======
 <package>
  <contents/>
->>>>>>> Ajout de ma directory
 </package>

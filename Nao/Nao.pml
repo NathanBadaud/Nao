@@ -3,15 +3,9 @@
     <Manifest src="manifest.xml" />
     <BehaviorDescriptions>
         <BehaviorDescription name="behavior" src="behavior_1" xar="behavior.xar" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        <BehaviorDescription name="behavior" src="Nathan/behaviorNathan" xar="behavior.xar" />
->>>>>>> Ajout de ma directory
-        <BehaviorDescription name="behavior" src="Benjamin/Nao Zedong" xar="behavior.xar" />
-=======
         <BehaviorDescription name="behavior" src="Wlad/BehaviorWlad" xar="behavior.xar" />
->>>>>>> Création directory Perso Wlad
+        <BehaviorDescription name="behavior" src="Benjamin/Nao Zedong" xar="behavior.xar" />
+        <BehaviorDescription name="behavior" src="Nathan/behaviorNathan" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
     <Resources />
