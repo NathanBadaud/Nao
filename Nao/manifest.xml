@@ -14,7 +14,11 @@
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>
+<<<<<<< HEAD
   <behaviorContent path="Benjamin/Nao Zedong">
+=======
+  <behaviorContent path="Wlad/BehaviorWlad">
+>>>>>>> Création directory Perso Wlad
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>

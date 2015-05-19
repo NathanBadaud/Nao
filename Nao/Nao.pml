@@ -3,7 +3,11 @@
     <Manifest src="manifest.xml" />
     <BehaviorDescriptions>
         <BehaviorDescription name="behavior" src="behavior_1" xar="behavior.xar" />
+<<<<<<< HEAD
         <BehaviorDescription name="behavior" src="Benjamin/Nao Zedong" xar="behavior.xar" />
+=======
+        <BehaviorDescription name="behavior" src="Wlad/BehaviorWlad" xar="behavior.xar" />
+>>>>>>> Création directory Perso Wlad
     </BehaviorDescriptions>
     <Dialogs />
     <Resources />
