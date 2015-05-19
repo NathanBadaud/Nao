@@ -1,5 +1,5 @@
 # Nao
-Projet Nao
+EPSI B3 - Projet Nao
 
 Groupe constitué de :
 - Walrand DEGEORGES
