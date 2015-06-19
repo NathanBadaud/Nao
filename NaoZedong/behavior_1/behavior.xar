@@ -8107,6 +8107,26 @@ class MyClass(GeneratedClass):
                                                                     </Timeline>
                                                                     <Resource name="Speech" type="Lock" timeout="0" />
                                                                 </Box>
+                                                                <Box name="Number Edit" id="6" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="496" y="463">
+                                                                    <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
+                                                                    <script language="4">
+                                                                        <content>
+                                                                            <![CDATA[# /!\ Generated content. Do not edit!
+class MyClass(GeneratedClass):
+	def __init__(self):
+		GeneratedClass.__init__(self)
+
+	def onInput_onStart(self):
+		self.onStopped(0)]]>
+</content>
+                                                                    </script>
+                                                                    <pluginContent>
+                                                                        <number>0</number>
+                                                                    </pluginContent>
+                                                                    <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                                    <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
+                                                                    <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
+                                                                </Box>
                                                                 <Link inputowner="1" indexofinput="2" outputowner="5" indexofoutput="3" />
                                                                 <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
                                                                 <Link inputowner="0" indexofinput="4" outputowner="1" indexofoutput="5" />
