@@ -119,7 +119,7 @@ class MyClass(GeneratedClass):
 		self.sentences = {
 			"Chinese" : " 你好 ",
 			"English" : " Hello ",
-			"French" : " Bonjour ",
+			"French" : " Bonjour.\nChoisissez un chiffre entre 1 et 5. ",
 			"German" : " Hallo ",
 			"Italian" : " Ciao ",
 			"Japanese" : " こんにちは ",
@@ -151,7 +151,8 @@ class MyClass(GeneratedClass):
                                                         <![CDATA[Hello]]>
 </english>
                                                     <french>
-                                                        <![CDATA[Bonjour]]>
+                                                        <![CDATA[Bonjour.
+Choisissez un chiffre entre 1 et 5.]]>
 </french>
                                                     <german>
                                                         <![CDATA[Hallo]]>
@@ -201,7 +202,7 @@ class MyClass(GeneratedClass):
                                                     <turkish>
                                                         <![CDATA[Merhaba]]>
 </turkish>
-                                                    <language>1</language>
+                                                    <language>2</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -265,7 +266,7 @@ class MyClass(GeneratedClass):
                             <Input name="onSet" type="1" type_size="1" nature="1" inner="0" tooltip="The data is set when a signal is received on this input." id="2" />
                             <Output name="onReady" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when the data has been set." id="3" />
                             <Output name="onError" type="3" type_size="1" nature="2" inner="0" tooltip="Error output:&#x0A;- triggered if the language asked cannot be set" id="4" />
-                            <Parameter name="Language" inherits_from_parent="0" content_type="3" value="English" default_value="English" custom_choice="1" tooltip="Set the language the robot speaks and understands." id="5">
+                            <Parameter name="Language" inherits_from_parent="0" content_type="3" value="French" default_value="English" custom_choice="1" tooltip="Set the language the robot speaks and understands." id="5">
                                 <Choice value="Arabic" />
                                 <Choice value="Brazilian" />
                                 <Choice value="Chinese" />
@@ -367,13 +368,13 @@ class MyClass(GeneratedClass):
                             <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
                             <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
                             <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="yes;no" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
+                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un, deux, trois, quatre, cinq" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
                             <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
                             <Parameter name="Visual expression" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Use the LEDs to show feedbacks from the robot during the recognition.&#x0A;&#x0A;For example:&#x0A;- Eyes leds get blue and turn when the speech recognition is launched.&#x0A;- They get yellow when the robot hears someone talking and analyses what it heard.&#x0A;- They flash in green when the robot understood and flash in red otherwise." id="9" />
                             <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
                             <Resource name="Speech recognition" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Choice" id="4" localization="8" tooltip="The Choice box is based on the speech recognition engine: it expects a defined number of predicted answers . The box&#x0A;includes interactive help during the behavior thanks to the head tactile sensor. The recognized answer is sent to the answer output.&#x0A;&#x0A;Note that you must open this box to enter the question text and the&#x0A;available answers." x="848" y="458">
+                        <Box name="Choice" id="4" localization="8" tooltip="The Choice box is based on the speech recognition engine: it expects a defined number of predicted answers . The box&#x0A;includes interactive help during the behavior thanks to the head tactile sensor. The recognized answer is sent to the answer output.&#x0A;&#x0A;Note that you must open this box to enter the question text and the&#x0A;available answers." x="812" y="342">
                             <bitmap>media/images/box/interaction/choice.png</bitmap>
                             <script language="4">
                                 <content>
@@ -614,7 +615,7 @@ class MyClass(GeneratedClass):
         # choices
         # !!! don't remove any comments from this variable !!!
         # (they are here to make the plugin work)
-        self.aListAllChoices = {"Arabic": ["نعم", "لا", ""], "Brazilian": ["sim", "não", ""], "Chinese": ["是", "不是", ""], "Czech": ["ano", "ne", ""], "Danish": ["ja", "nej", ""], "Dutch": ["ja", "nee", ""], "English": ["yes", "no", ""], "Finnish": ["kyllä", "ei", ""], "French": ["oui", "non", ""], "German": ["ja", "nein", ""], "Italian": ["sì", "no", ""], "Japanese": ["はい", "いいえ", ""], "Korean": ["예", "아니", ""], "Polish": ["tak", "nie", ""], "Portuguese": ["sim", "não", ""], "Russian": ["да", "нет", ""], "Spanish": ["si", "no", ""], "Swedish": ["ja", "ingen", ""], "Turkish": ["evet", "hayır", ""]
+        self.aListAllChoices = {"Arabic": ["نعم", "لا", "", "", "", ""], "Brazilian": ["sim", "não", "", "", "", ""], "Chinese": ["是", "不是", "", "", "", ""], "Czech": ["ano", "ne", "", "", "", ""], "Danish": ["ja", "nej", "", "", "", ""], "Dutch": ["ja", "nee", "", "", "", ""], "English": ["yes", "no", "", "", "", ""], "Finnish": ["kyllä", "ei", "", "", "", ""], "French": ["un", "deux", "trois", "quatre", "cinq", ""], "German": ["ja", "nein", "", "", "", ""], "Italian": ["sì", "no", "", "", "", ""], "Japanese": ["はい", "いいえ", "", "", "", ""], "Korean": ["예", "아니", "", "", "", ""], "Polish": ["tak", "nie", "", "", "", ""], "Portuguese": ["sim", "não", "", "", "", ""], "Russian": ["да", "нет", "", "", "", ""], "Spanish": ["si", "no", "", "", "", ""], "Swedish": ["ja", "ingen", "", "", "", ""], "Turkish": ["evet", "hayır", "", "", "", ""]
                                }
         # end - choices
 
@@ -2243,98 +2244,155 @@ class MyClass(GeneratedClass):
                                                         <keyword>نعم</keyword>
                                                         <keyword>لا</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </arabic>
                                                     <brazilian>
                                                         <keyword>sim</keyword>
                                                         <keyword>não</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </brazilian>
                                                     <chinese>
                                                         <keyword>是</keyword>
                                                         <keyword>不是</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </chinese>
                                                     <czech>
                                                         <keyword>ano</keyword>
                                                         <keyword>ne</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </czech>
                                                     <danish>
                                                         <keyword>ja</keyword>
                                                         <keyword>nej</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </danish>
                                                     <dutch>
                                                         <keyword>ja</keyword>
                                                         <keyword>nee</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </dutch>
                                                     <english>
                                                         <keyword>yes</keyword>
                                                         <keyword>no</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </english>
                                                     <finnish>
                                                         <keyword>kyllä</keyword>
                                                         <keyword>ei</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </finnish>
                                                     <french>
-                                                        <keyword>oui</keyword>
-                                                        <keyword>non</keyword>
+                                                        <keyword>un</keyword>
+                                                        <keyword>deux</keyword>
+                                                        <keyword>trois</keyword>
+                                                        <keyword>quatre</keyword>
+                                                        <keyword>cinq</keyword>
                                                         <keyword></keyword>
                                                     </french>
                                                     <german>
                                                         <keyword>ja</keyword>
                                                         <keyword>nein</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </german>
                                                     <italian>
                                                         <keyword>sì</keyword>
                                                         <keyword>no</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </italian>
                                                     <japanese>
                                                         <keyword>はい</keyword>
                                                         <keyword>いいえ</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </japanese>
                                                     <korean>
                                                         <keyword>예</keyword>
                                                         <keyword>아니</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </korean>
                                                     <polish>
                                                         <keyword>tak</keyword>
                                                         <keyword>nie</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </polish>
                                                     <portuguese>
                                                         <keyword>sim</keyword>
                                                         <keyword>não</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </portuguese>
                                                     <russian>
                                                         <keyword>да</keyword>
                                                         <keyword>нет</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </russian>
                                                     <spanish>
                                                         <keyword>si</keyword>
                                                         <keyword>no</keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                         <keyword></keyword>
                                                     </spanish>
                                                     <swedish>
                                                         <keyword>ja</keyword>
                                                         <keyword>ingen</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </swedish>
                                                     <turkish>
                                                         <keyword>evet</keyword>
                                                         <keyword>hayır</keyword>
                                                         <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
+                                                        <keyword></keyword>
                                                     </turkish>
-                                                    <language>english</language>
+                                                    <language>french</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is&#x0A;received on this input. The signal can be&#x0A;either a string so that the robot asks a&#x0A;question before the recognition of a&#x0A;choice, or a bang so that the speech&#x0A;recognition starts immediately without any&#x0A;question." id="2" />
@@ -2343,25 +2401,28 @@ class MyClass(GeneratedClass):
                                                 <Output name="other" type="0" type_size="1" nature="1" inner="0" tooltip='When the user skipped the question, this output gives how it has been&#x0A;skipped. Gives also the number of the choice chosen in case of external&#x0A;choices.&#x0A;This output can be:&#x0A;- &quot;timeout&quot; if the user has not replied.&#x0A;- &quot;notUnderstood&quot; if the interaction with the speech recognition failed.&#x0A;- &quot;onStop&quot; if the onStop input has been activated.&#x0A;- &quot;wordRecognised&quot; if the exit command has been understood.&#x0A;- &quot;onTactileSensor&quot; if the user has tapped the tactile sensor of the robot.&#x0A;- an integer being the number of the external choice in the input list.' id="5" />
                                                 <Output name="output_1" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="6" />
                                                 <Output name="output_2" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="7" />
-                                                <Parameter name="Activate head" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Head motion activation during the recognition and while the robot is&#x0A;talking." id="8" />
-                                                <Parameter name="Activate arms" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Arms motion activation while the robot is talking." id="9" />
-                                                <Parameter name="Activate legs" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Legs motion activation while the robot is talking." id="10" />
-                                                <Parameter name="Minimum threshold to understand" inherits_from_parent="0" content_type="2" value="0.2" default_value="0.2" min="0" max="1" tooltip="Minimum threshold to get in order to be understood by the robot." id="11" />
-                                                <Parameter name="Minimum threshold to be sure" inherits_from_parent="0" content_type="2" value="0.3" default_value="0.3" min="0" max="1" tooltip="Minimum threshold to get so that the robot would be sure about the user&apos;s&#x0A;answer. Below this threshold, the robot asks a confirmation about what has been&#x0A;understood." id="12" />
-                                                <Parameter name="Speech recognition timeout when confirmation" inherits_from_parent="0" content_type="1" value="6" default_value="6" min="1" max="20" tooltip="When the robot asks if what he understood is correct, after this time, if there has been&#x0A;nothing heard, the speech recognition is stopped and the answer understood is&#x0A;considered as correct." id="13" />
-                                                <Parameter name="Speech recognition timeout" inherits_from_parent="0" content_type="1" value="6" default_value="6" min="1" max="20" tooltip="After this time, if there has been nothing heard, the speech recognition is stopped&#x0A;and the question is repeated or is skipped." id="14" />
-                                                <Parameter name="Maximum number of repetition when no reply" inherits_from_parent="0" content_type="1" value="3" default_value="3" min="1" max="20" tooltip='After this number of times when the user did not reply, the question is skipped, and&#x0A;the output other is stimulated with &quot;timeout&quot;.' id="15" />
-                                                <Parameter name="Repeat validated choice" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="If this option is activated, the robot repeats the validated choice when it exits the box." id="16" />
-                                                <Parameter name="Activate ears light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate ears light animation (turn, flash, etc...)." id="17" />
-                                                <Parameter name="Activate eyes light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate eyes light animation (turn, flash, etc...)." id="18" />
-                                                <Parameter name="Activate brain light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate brain light animation (turn, flash, etc...)." id="19" />
-                                                <Parameter name="Tactile sensor menu timeout" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="1" max="20" tooltip="After this time, if there has been no action made on the tactile sensor or the torso&#x0A;button, the choice currently selected is repeated or the question is skipped." id="20" />
-                                                <Parameter name="Maximum number of repetition when failure" inherits_from_parent="0" content_type="1" value="5" default_value="5" min="1" max="20" tooltip='After this number of times when the robot did not understand the user, the question&#x0A;is skipped, and the output other is stimulated with &quot;notUnderstood&quot;.' id="21" />
-                                                <Parameter name="Activate help when failure" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="When this parameter is activated, when the robot did not understand the user, he&#x0A;says some help enumerating available choices and attracting attention on the&#x0A;other available modalities (head tactile sensor)." id="22" />
-                                                <Parameter name="Activate help command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Enable the help command. So you can say &quot;help&quot; during the speech recognition&#x0A;and the robot will tell you more information.&#x0A;You will still be able to ask help by clicking the torso button.' id="23" />
-                                                <Parameter name="Activate repeat command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Activate the repeat command. So you can say &quot;repeat&quot; during the speech&#x0A;recognition and the robot will repeat the question.' id="24" />
-                                                <Parameter name="Activate exit command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Enable the exit command. So you can say &quot;exit&quot; during the speech recognition&#x0A;and the box will be stopped and the &apos;other&apos; output will be stimulated with&#x0A;&quot;wordRecognised&quot;.&#x0A;You will still be able to exit the box with&#x0A;the tactile sensor.' id="25" />
-                                                <Parameter name="Sentences file" inherits_from_parent="0" content_type="4" value="/Aldebaran/choice_sentences.xml" default_value="/Aldebaran/choice_sentences.xml" tooltip="File containing all necessary sentences in each supported language." id="26" />
+                                                <Output name="output_3" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="8" />
+                                                <Output name="output_4" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="9" />
+                                                <Output name="output_5" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="10" />
+                                                <Parameter name="Activate head" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Head motion activation during the recognition and while the robot is&#x0A;talking." id="11" />
+                                                <Parameter name="Activate arms" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Arms motion activation while the robot is talking." id="12" />
+                                                <Parameter name="Activate legs" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="Legs motion activation while the robot is talking." id="13" />
+                                                <Parameter name="Minimum threshold to understand" inherits_from_parent="0" content_type="2" value="0.2" default_value="0.2" min="0" max="1" tooltip="Minimum threshold to get in order to be understood by the robot." id="14" />
+                                                <Parameter name="Minimum threshold to be sure" inherits_from_parent="0" content_type="2" value="0.3" default_value="0.3" min="0" max="1" tooltip="Minimum threshold to get so that the robot would be sure about the user&apos;s&#x0A;answer. Below this threshold, the robot asks a confirmation about what has been&#x0A;understood." id="15" />
+                                                <Parameter name="Speech recognition timeout when confirmation" inherits_from_parent="0" content_type="1" value="6" default_value="6" min="1" max="20" tooltip="When the robot asks if what he understood is correct, after this time, if there has been&#x0A;nothing heard, the speech recognition is stopped and the answer understood is&#x0A;considered as correct." id="16" />
+                                                <Parameter name="Speech recognition timeout" inherits_from_parent="0" content_type="1" value="6" default_value="6" min="1" max="20" tooltip="After this time, if there has been nothing heard, the speech recognition is stopped&#x0A;and the question is repeated or is skipped." id="17" />
+                                                <Parameter name="Maximum number of repetition when no reply" inherits_from_parent="0" content_type="1" value="3" default_value="3" min="1" max="20" tooltip='After this number of times when the user did not reply, the question is skipped, and&#x0A;the output other is stimulated with &quot;timeout&quot;.' id="18" />
+                                                <Parameter name="Repeat validated choice" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="If this option is activated, the robot repeats the validated choice when it exits the box." id="19" />
+                                                <Parameter name="Activate ears light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate ears light animation (turn, flash, etc...)." id="20" />
+                                                <Parameter name="Activate eyes light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate eyes light animation (turn, flash, etc...)." id="21" />
+                                                <Parameter name="Activate brain light" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Activate brain light animation (turn, flash, etc...)." id="22" />
+                                                <Parameter name="Tactile sensor menu timeout" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="1" max="20" tooltip="After this time, if there has been no action made on the tactile sensor or the torso&#x0A;button, the choice currently selected is repeated or the question is skipped." id="23" />
+                                                <Parameter name="Maximum number of repetition when failure" inherits_from_parent="0" content_type="1" value="5" default_value="5" min="1" max="20" tooltip='After this number of times when the robot did not understand the user, the question&#x0A;is skipped, and the output other is stimulated with &quot;notUnderstood&quot;.' id="24" />
+                                                <Parameter name="Activate help when failure" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="When this parameter is activated, when the robot did not understand the user, he&#x0A;says some help enumerating available choices and attracting attention on the&#x0A;other available modalities (head tactile sensor)." id="25" />
+                                                <Parameter name="Activate help command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Enable the help command. So you can say &quot;help&quot; during the speech recognition&#x0A;and the robot will tell you more information.&#x0A;You will still be able to ask help by clicking the torso button.' id="26" />
+                                                <Parameter name="Activate repeat command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Activate the repeat command. So you can say &quot;repeat&quot; during the speech&#x0A;recognition and the robot will repeat the question.' id="27" />
+                                                <Parameter name="Activate exit command" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip='Enable the exit command. So you can say &quot;exit&quot; during the speech recognition&#x0A;and the box will be stopped and the &apos;other&apos; output will be stimulated with&#x0A;&quot;wordRecognised&quot;.&#x0A;You will still be able to exit the box with&#x0A;the tactile sensor.' id="28" />
+                                                <Parameter name="Sentences file" inherits_from_parent="0" content_type="4" value="/Aldebaran/choice_sentences.xml" default_value="/Aldebaran/choice_sentences.xml" tooltip="File containing all necessary sentences in each supported language." id="29" />
                                                 <Timeline enable="1" fps="1" start_frame="1" end_frame="-1" size="-1">
                                                     <BehaviorLayer name="arms_">
                                                         <BehaviorKeyframe name="end" index="1" bitmap="media/images/box/movement/move_arm.png">
@@ -7490,7 +7551,7 @@ class MyClass(GeneratedClass):
 		self.sentences = {
 			"Chinese" : " 你喜欢吃巧克力吗？ ",
 			"English" : " Do you like chocolate? ",
-			"French" : " Aimes-tu le chocolat ? ",
+			"French" : " Table a apprendre ",
 			"German" : " Mögen Sie Schokolade? ",
 			"Italian" : " Ti piace il cioccolato? ",
 			"Japanese" : " チョコレートが好きですか ",
@@ -7522,7 +7583,7 @@ class MyClass(GeneratedClass):
                                                         <![CDATA[Do you like chocolate?]]>
 </english>
                                                     <french>
-                                                        <![CDATA[Aimes-tu le chocolat ?]]>
+                                                        <![CDATA[Table a apprendre]]>
 </french>
                                                     <german>
                                                         <![CDATA[Mögen Sie Schokolade?]]>
@@ -7572,7 +7633,7 @@ class MyClass(GeneratedClass):
                                                     <turkish>
                                                         <![CDATA[Çikolata sever misin?]]>
 </turkish>
-                                                    <language>1</language>
+                                                    <language>2</language>
                                                 </pluginContent>
                                                 <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
                                                 <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
@@ -7580,9 +7641,6 @@ class MyClass(GeneratedClass):
                                             </Box>
                                             <Link inputowner="1" indexofinput="2" outputowner="5" indexofoutput="3" />
                                             <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="0" indexofinput="4" outputowner="1" indexofoutput="5" />
-                                            <Link inputowner="0" indexofinput="5" outputowner="1" indexofoutput="6" />
-                                            <Link inputowner="0" indexofinput="5" outputowner="1" indexofoutput="7" />
                                         </Diagram>
                                     </BehaviorKeyframe>
                                 </BehaviorLayer>
@@ -7591,10 +7649,63 @@ class MyClass(GeneratedClass):
                             <Resource name="Speech" type="Lock" timeout="0" />
                             <Resource name="Speech recognition" type="Lock" timeout="0" />
                         </Box>
+                        <Box name="Random Int." id="5" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="816" y="445">
+                            <bitmap>media/images/box/box-script.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[import random
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        # attributes needed in shuffle mode
+        self.nMax = 1
+        self.nMin = 0
+        self.nIndex = self.nMax - self.nMin
+        self.aShuffled = []
+
+    def onUnload(self):
+         #puts code for box cleanup here
+        pass
+
+    def onInput_onStart(self):
+        nMax = self.getParameter("Max value")
+        nMin = self.getParameter("Min value")
+        if( nMin > nMax ):
+            temp = nMin
+            nMin = nMax
+            nMax = temp
+        # if shuffle
+        if( self.getParameter("Shuffle") ):
+            self.nIndex += 1
+            if( self.nIndex > self.nMax - self.nMin or nMax != self.nMax or nMin != self.nMin ):
+                self.nMax = nMax
+                self.nMin = nMin
+                self.nIndex = 0
+                self.aShuffled = []
+                for i in range( nMin, nMax + 1 ):
+                    self.aShuffled.insert( random.randint(0, len(self.aShuffled)), i )
+            self.output_RandomValue( self.aShuffled[self.nIndex] )
+        # if not shuffle
+        else:
+            self.nIndex = self.nMax - self.nMin
+            self.output_RandomValue( random.randint( nMin, nMax ) )]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="Generate a random integer." id="2" />
+                            <Output name="output_RandomValue" type="2" type_size="1" nature="2" inner="0" tooltip="The random value obtained." id="3" />
+                            <Parameter name="Min value" inherits_from_parent="0" content_type="1" value="1" default_value="0" min="0" max="1000" tooltip="The minimum value you can get." id="4" />
+                            <Parameter name="Max value" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="0" max="1000" tooltip="The maximum number you can get." id="5" />
+                            <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
+                        </Box>
                         <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
                         <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="3" />
                         <Link inputowner="3" indexofinput="2" outputowner="1" indexofoutput="4" />
                         <Link inputowner="4" indexofinput="2" outputowner="3" indexofoutput="4" />
+                        <Link inputowner="5" indexofinput="2" outputowner="3" indexofoutput="5" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
