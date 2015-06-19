@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package uuid="jeux-naomath-14-de05e8">
+ <names>
+  <name lang="en_US">jeux-naomath-14</name>
+ </names>
+ <descriptionLanguages>
+  <language>en_US</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="jeux-naomath-14">
+   <nature></nature>
+   <permissions/>
+  </behaviorContent>
+ </contents>
+</package>
