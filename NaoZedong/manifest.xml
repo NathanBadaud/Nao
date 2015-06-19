@@ -14,11 +14,7 @@
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>
-<<<<<<< HEAD
   <behaviorContent path="voice recognition">
-=======
-  <behaviorContent path="behavior_nahal">
->>>>>>> Behavior test Nathan
    <nature>interactive</nature>
    <permissions/>
   </behaviorContent>
