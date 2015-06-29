@@ -2664,7 +2664,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="1522" y="34">
+                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="1512" y="25">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2865,7 +2865,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1374" y="201">
+                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1416" y="318">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2917,7 +2917,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Max value" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="0" max="1000" tooltip="The maximum number you can get." id="5" />
                             <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
                         </Box>
-                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1444" y="361">
+                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1545" y="244">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2973,7 +2973,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1300" y="568">
+                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1465" y="658">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3004,7 +3004,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1294" y="453">
+                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1460" y="505">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3256,250 +3256,6 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="1520" y="645">
-                            <bitmap>media/images/box/interaction/ear.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        try:
-            self.asr = ALProxy("ALSpeechRecognition")
-        except Exception as e:
-            self.asr = None
-            self.logger.error(e)
-        self.memory = ALProxy("ALMemory")
-
-    def onLoad(self):
-        from threading import Lock
-        self.bIsRunning = False
-        self.mutex = Lock()
-        self.hasPushed = False
-        self.hasSubscribed = False
-        self.BIND_PYTHON(self.getName(), "onWordRecognized")
-
-    def onUnload(self):
-        from threading import Lock
-        self.mutex.acquire()
-        try:
-            if (self.bIsRunning):
-                if (self.hasSubscribed):
-                    self.memory.unsubscribeToEvent("WordRecognized", self.getName())
-                if (self.hasPushed and self.asr):
-                    self.asr.popContexts()
-        except RuntimeError, e:
-            self.mutex.release()
-            raise e
-        self.bIsRunning = False;
-        self.mutex.release()
-
-    def onInput_onStart(self):
-        from threading import Lock
-        self.mutex.acquire()
-        if(self.bIsRunning):
-            self.mutex.release()
-            return
-        self.bIsRunning = True
-        try:
-            if self.asr:
-                self.asr.setVisualExpression(self.getParameter("Visual expression"))
-                self.asr.pushContexts()
-            self.hasPushed = True
-            if self.asr:
-                self.asr.setVocabulary( self.getParameter("Word list").split(';'), self.getParameter("Enable word spotting") )
-            self.memory.subscribeToEvent("WordRecognized", self.getName(), "onWordRecognized")
-            self.hasSubscribed = True
-        except RuntimeError, e:
-            self.mutex.release()
-            self.onUnload()
-            raise e
-        self.mutex.release()
-
-    def onInput_onStop(self):
-        if( self.bIsRunning ):
-            self.onUnload()
-            self.onStopped()
-
-    def onWordRecognized(self, key, value, message):
-        if(len(value) > 1 and value[1] >= self.getParameter("Confidence threshold (%)")/100.):
-            self.wordRecognized(value[0]) #~ activate output of the box
-        else:
-            self.onNothing()]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
-                            <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
-                            <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un;deux;trois;quatre;cinq;six;sept;huit;neuf:dix" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
-                            <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
-                            <Parameter name="Visual expression" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Use the LEDs to show feedbacks from the robot during the recognition.&#x0A;&#x0A;For example:&#x0A;- Eyes leds get blue and turn when the speech recognition is launched.&#x0A;- They get yellow when the robot hears someone talking and analyses what it heard.&#x0A;- They flash in green when the robot understood and flash in red otherwise." id="9" />
-                            <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
-                            <Resource name="Speech recognition" type="Lock" timeout="0" />
-                        </Box>
-                        <Box name="Get Data" id="33" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1606" y="272">
-                            <bitmap>media/images/box/sensors/STM.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self)
-        pass
-
-    def onLoad(self):
-        self.memory = ALProxy("ALMemory")
-
-    def onUnload(self):
-        self.memory = None
-
-    def onInput_onStart(self):
-        result = self.memory.getData(self.getParameter("key"))
-        self.onStopped(result)
-
-    def onInput_onStop(self):
-        self.onUnload() #~ it is recommended to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
-        pass]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the retrieved value from ALMemory." id="4" />
-                            <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
-                            <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
-                        </Box>
-                        <Box name="Get Data (1)" id="34" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1612" y="390">
-                            <bitmap>media/images/box/sensors/STM.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self)
-        pass
-
-    def onLoad(self):
-        self.memory = ALProxy("ALMemory")
-
-    def onUnload(self):
-        self.memory = None
-
-    def onInput_onStart(self):
-        result = self.memory.getData(self.getParameter("key"))
-        self.onStopped(result)
-
-    def onInput_onStop(self):
-        self.onUnload() #~ it is recommended to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
-        pass]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the retrieved value from ALMemory." id="4" />
-                            <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
-                            <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
-                        </Box>
-                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1747" y="330">
-                            <bitmap>media/images/box/box-script.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[import random
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        self.rMultiplier = 2.0
-        self.bMultiplicand = False
-        self.bMultiplier = False
-        self.rMultiplicand = 2.0
-
-    def onUnload(self):
-        #puts code for box cleanup here
-        pass
-
-    def onInput_Multiplicand(self, rVal ):
-        self.rMultiplicand = float(rVal)
-        self.bMultiplicand = True
-        self.process()
-
-    def onInput_Multiplier(self, rVal ):
-        self.rMultiplier = float(rVal)
-        self.bMultiplier = True
-        self.process()
-
-    def process(self):
-        if self.bMultiplicand and self.bMultiplier:
-            rRes = self.rMultiplicand * self.rMultiplier
-            self.bMultiplicand = False
-            self.bMultiplier = False
-            self.output_Product( rRes )]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="Multiplicand" type="2" type_size="1" nature="1" inner="0" tooltip="The multiplicand." id="2" />
-                            <Input name="Multiplier" type="2" type_size="1" nature="1" inner="0" tooltip="The multiplier." id="3" />
-                            <Output name="output_Product" type="2" type_size="1" nature="2" inner="0" tooltip="The product." id="4" />
-                        </Box>
-                        <Box name="Say Text (2)" id="36" localization="8" tooltip="Say the text received on its input." x="1776" y="512">
-                            <bitmap>media/images/box/interaction/say.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[import time
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        self.tts = ALProxy('ALTextToSpeech')
-        self.ttsStop = ALProxy('ALTextToSpeech', True) #Create another proxy as wait is blocking if audioout is remote
-
-    def onLoad(self):
-        self.bIsRunning = False
-        self.ids = []
-
-    def onUnload(self):
-        for id in self.ids:
-            try:
-                self.ttsStop.stop(id)
-            except:
-                pass
-        while( self.bIsRunning ):
-            time.sleep( 0.2 )
-
-    def onInput_onStart(self, p):
-        self.bIsRunning = True
-        try:
-            sentence = "\RSPD="+ str( self.getParameter("Speed (%)") ) + "\ "
-            sentence += "\VCT="+ str( self.getParameter("Voice shaping (%)") ) + "\ "
-            sentence += str(p)
-            sentence +=  "\RST\ "
-            id = self.tts.post.say(str(sentence))
-            self.ids.append(id)
-            self.tts.wait(id, 0)
-        finally:
-            try:
-                self.ids.remove(id)
-            except:
-                pass
-            if( self.ids == [] ):
-                self.onStopped() # activate output of the box
-                self.bIsRunning = False
-
-    def onInput_onStop(self):
-        self.onUnload()]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
-                            <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
-                            <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
-                            <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
-                            <Resource name="Speech" type="Lock" timeout="0" />
-                        </Box>
                         <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
                         <Link inputowner="5" indexofinput="2" outputowner="1" indexofoutput="3" />
                         <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="4" />
@@ -3551,14 +3307,6 @@ class MyClass(GeneratedClass):
                         <Link inputowner="17" indexofinput="2" outputowner="4" indexofoutput="4" />
                         <Link inputowner="30" indexofinput="2" outputowner="17" indexofoutput="3" />
                         <Link inputowner="29" indexofinput="2" outputowner="17" indexofoutput="3" />
-                        <Link inputowner="32" indexofinput="3" outputowner="32" indexofoutput="5" />
-                        <Link inputowner="32" indexofinput="2" outputowner="27" indexofoutput="4" />
-                        <Link inputowner="33" indexofinput="2" outputowner="27" indexofoutput="4" />
-                        <Link inputowner="34" indexofinput="2" outputowner="27" indexofoutput="4" />
-                        <Link inputowner="35" indexofinput="2" outputowner="33" indexofoutput="4" />
-                        <Link inputowner="35" indexofinput="3" outputowner="34" indexofoutput="4" />
-                        <Link inputowner="36" indexofinput="2" outputowner="35" indexofoutput="4" />
-                        <Link inputowner="0" indexofinput="4" outputowner="36" indexofoutput="4" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
