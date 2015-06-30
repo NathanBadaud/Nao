@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="84.0896">
+                    <Diagram scale="59.4604">
                         <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="151" y="83">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
@@ -1309,7 +1309,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="Result" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="2304" y="4">
+                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="2292" y="451">
                             <bitmap>media/images/box/interaction/choice.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1742,7 +1742,7 @@ class MyClass(GeneratedClass):
                             <Output name="output_98" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="101" />
                             <Output name="output_99" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="102" />
                         </Box>
-                        <Box name="Say Text (2)" id="3" localization="8" tooltip="Say the text received on its input." x="2641" y="55">
+                        <Box name="Say Text (2)" id="3" localization="8" tooltip="Say the text received on its input." x="2556" y="471">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1793,7 +1793,7 @@ class MyClass(GeneratedClass):
                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
                             <Input name="onStart" type="2" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
                             <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
+                            <Output name="onStopped" type="2" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
                             <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
@@ -4368,38 +4368,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Get Data (2)" id="7" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="2719" y="251">
-                            <bitmap>media/images/box/sensors/STM.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self)
-        pass
-
-    def onLoad(self):
-        self.memory = ALProxy("ALMemory")
-
-    def onUnload(self):
-        self.memory = None
-
-    def onInput_onStart(self):
-        result = self.memory.getData(self.getParameter("key"))
-        self.onStopped(result)
-
-    def onInput_onStop(self):
-        self.onUnload() #~ it is recommended to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
-        pass]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the retrieved value from ALMemory." id="4" />
-                            <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
-                            <Parameter name="key" inherits_from_parent="0" content_type="3" value="Result" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
-                        </Box>
-                        <Box name="Insert Data (3)" id="8" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="2785" y="32">
+                        <Box name="Insert Data (3)" id="8" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="2687" y="263">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -4429,6 +4398,98 @@ class MyClass(GeneratedClass):
                             <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the inserted value in ALMemory." id="4" />
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="HumanResult" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
+                        </Box>
+                        <Box name="Get Data (3)" id="9" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="2803" y="280">
+                            <bitmap>media/images/box/sensors/STM.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        pass
+
+    def onLoad(self):
+        self.memory = ALProxy("ALMemory")
+
+    def onUnload(self):
+        self.memory = None
+
+    def onInput_onStart(self):
+        result = self.memory.getData(self.getParameter("key"))
+        self.onStopped(result)
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommended to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the retrieved value from ALMemory." id="4" />
+                            <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
+                            <Parameter name="key" inherits_from_parent="0" content_type="3" value="HumanResult" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
+                        </Box>
+                        <Box name="If" id="10" localization="8" tooltip="Test a condition and stimulate the then or else outputs depending on the boolean&#x0A;value of the condition.&#x0A;The condition can be set in parameters." x="2785" y="465">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        #~ puts code for box initialization here
+        pass
+
+    def onUnload(self):
+        #~ puts code for box cleanup here
+        pass
+
+    def onInput_onData(self, p):
+        param = self.getParameter("Value to compare")
+        try:
+            p = float(p)
+            param = float(param)
+        except:
+            p = str(p)
+            param = str(param)
+        operator = self.getParameter("Condition operator")
+        if( operator == "<" ):
+            self.outputTrueOrFalse( p < param )
+        elif( operator == "< or =" ):
+            self.outputTrueOrFalse( p <= param )
+        elif( operator == "=" ):
+            self.outputTrueOrFalse( p == param )
+        elif( operator == "> or =" ):
+            self.outputTrueOrFalse( p >= param )
+        elif( operator == ">" ):
+            self.outputTrueOrFalse( p > param )
+        elif( operator == "≠" ):
+            self.outputTrueOrFalse( p != param )
+        else:
+            raise Exception( "Operator not known: " + str(operator) )
+
+    def outputTrueOrFalse(self, condition):
+        if( condition ):
+            self.output_then()
+        else:
+            self.output_else()]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onData" type="0" type_size="1" nature="1" inner="0" tooltip="The data to test." id="2" />
+                            <Output name="output_then" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent if the condition is true." id="3" />
+                            <Output name="output_else" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent if the condition is false." id="4" />
+                            <Parameter name="Condition operator" inherits_from_parent="0" content_type="3" value="=" default_value="≠" custom_choice="0" tooltip='Choose the condition operator.&#x0A;&#x0A;For example:&#x0A;If you choose &quot;&gt; or =&quot;, the condition will be: is the input is higher or equal&#x0A;than the parameter?' id="5">
+                                <Choice value="&lt;" />
+                                <Choice value="&lt; or =" />
+                                <Choice value="=" />
+                                <Choice value="&gt; or =" />
+                                <Choice value="&gt;" />
+                                <Choice value="≠" />
+                            </Parameter>
+                            <Parameter name="Value to compare" inherits_from_parent="0" content_type="3" value="Result" default_value="0" custom_choice="0" tooltip="This is the value which is compared to the input value." id="6" />
                         </Box>
                         <Link inputowner="5" indexofinput="2" outputowner="1" indexofoutput="3" />
                         <Link inputowner="37" indexofinput="2" outputowner="5" indexofoutput="4" />
@@ -4581,7 +4642,8 @@ class MyClass(GeneratedClass):
                         <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="3" />
                         <Link inputowner="32" indexofinput="2" outputowner="4" indexofoutput="4" />
                         <Link inputowner="8" indexofinput="2" outputowner="3" indexofoutput="4" />
-                        <Link inputowner="7" indexofinput="2" outputowner="3" indexofoutput="4" />
+                        <Link inputowner="9" indexofinput="2" outputowner="8" indexofoutput="4" />
+                        <Link inputowner="10" indexofinput="2" outputowner="9" indexofoutput="4" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
