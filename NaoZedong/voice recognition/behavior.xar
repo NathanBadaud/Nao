@@ -14,8 +14,8 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="59.4604">
-                        <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="167" y="62">
+                    <Diagram scale="50">
+                        <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="110" y="5">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -55,293 +55,7 @@
                             </Parameter>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="173" y="607">
-                            <bitmap>media/images/box/interaction/ear.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        try:
-            self.asr = ALProxy("ALSpeechRecognition")
-        except Exception as e:
-            self.asr = None
-            self.logger.error(e)
-        self.memory = ALProxy("ALMemory")
-
-    def onLoad(self):
-        from threading import Lock
-        self.bIsRunning = False
-        self.mutex = Lock()
-        self.hasPushed = False
-        self.hasSubscribed = False
-        self.BIND_PYTHON(self.getName(), "onWordRecognized")
-
-    def onUnload(self):
-        from threading import Lock
-        self.mutex.acquire()
-        try:
-            if (self.bIsRunning):
-                if (self.hasSubscribed):
-                    self.memory.unsubscribeToEvent("WordRecognized", self.getName())
-                if (self.hasPushed and self.asr):
-                    self.asr.popContexts()
-        except RuntimeError, e:
-            self.mutex.release()
-            raise e
-        self.bIsRunning = False;
-        self.mutex.release()
-
-    def onInput_onStart(self):
-        from threading import Lock
-        self.mutex.acquire()
-        if(self.bIsRunning):
-            self.mutex.release()
-            return
-        self.bIsRunning = True
-        try:
-            if self.asr:
-                self.asr.setVisualExpression(self.getParameter("Visual expression"))
-                self.asr.pushContexts()
-            self.hasPushed = True
-            if self.asr:
-                self.asr.setVocabulary( self.getParameter("Word list").split(';'), self.getParameter("Enable word spotting") )
-            self.memory.subscribeToEvent("WordRecognized", self.getName(), "onWordRecognized")
-            self.hasSubscribed = True
-        except RuntimeError, e:
-            self.mutex.release()
-            self.onUnload()
-            raise e
-        self.mutex.release()
-
-    def onInput_onStop(self):
-        if( self.bIsRunning ):
-            self.onUnload()
-            self.onStopped()
-
-    def onWordRecognized(self, key, value, message):
-        if(len(value) > 1 and value[1] >= self.getParameter("Confidence threshold (%)")/100.):
-            self.wordRecognized(value[0]) #~ activate output of the box
-        else:
-            self.onNothing()]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
-                            <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
-                            <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un;deux;trois;quatre;cinq;six;sept;huit;neuf:dix" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
-                            <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
-                            <Parameter name="Visual expression" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Use the LEDs to show feedbacks from the robot during the recognition.&#x0A;&#x0A;For example:&#x0A;- Eyes leds get blue and turn when the speech recognition is launched.&#x0A;- They get yellow when the robot hears someone talking and analyses what it heard.&#x0A;- They flash in green when the robot understood and flash in red otherwise." id="9" />
-                            <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
-                            <Resource name="Speech recognition" type="Lock" timeout="0" />
-                        </Box>
-                        <Box name="Say" id="3" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="386" y="178">
-                            <bitmap>media/images/box/interaction/say.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-
-    def onLoad(self):
-        self.bIsRunning = False
-
-    def onUnload(self):
-        self.bIsRunning = False
-
-    def onInput_onStart(self):
-        self.bIsRunning = True
-
-    def onInput_onStop(self):
-        if( self.bIsRunning ):
-            self.onUnload()
-            self.onStopped()]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
-                            <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
-                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
-                            <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished or stopped." id="4" />
-                            <Parameter name="Voice shaping (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.&#x0A;&#x0A;!Warning! This feature is not available yet in Japanese, Chinese and Korean.' id="5" />
-                            <Parameter name="Speed (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed.&#x0A;&#x0A;!Warning! This feature is not available yet in Japanese, Chinese and Korean." id="6" />
-                            <Timeline enable="0">
-                                <BehaviorLayer name="behavior_layer1">
-                                    <BehaviorKeyframe name="keyframe1" index="1">
-                                        <Diagram>
-                                            <Box name="Say Text" id="2" localization="8" tooltip="Say the text received on its input." x="422" y="65">
-                                                <bitmap>media/images/box/interaction/say.png</bitmap>
-                                                <script language="4">
-                                                    <content>
-                                                        <![CDATA[import time
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        self.tts = ALProxy('ALTextToSpeech')
-        self.ttsStop = ALProxy('ALTextToSpeech', True) #Create another proxy as wait is blocking if audioout is remote
-
-    def onLoad(self):
-        self.bIsRunning = False
-        self.ids = []
-
-    def onUnload(self):
-        for id in self.ids:
-            try:
-                self.ttsStop.stop(id)
-            except:
-                pass
-        while( self.bIsRunning ):
-            time.sleep( 0.2 )
-
-    def onInput_onStart(self, p):
-        self.bIsRunning = True
-        try:
-            sentence = "\RSPD="+ str( self.getParameter("Speed (%)") ) + "\ "
-            sentence += "\VCT="+ str( self.getParameter("Voice shaping (%)") ) + "\ "
-            sentence += str(p)
-            sentence +=  "\RST\ "
-            id = self.tts.post.say(str(sentence))
-            self.ids.append(id)
-            self.tts.wait(id, 0)
-        finally:
-            try:
-                self.ids.remove(id)
-            except:
-                pass
-            if( self.ids == [] ):
-                self.onStopped() # activate output of the box
-                self.bIsRunning = False
-
-    def onInput_onStop(self):
-        self.onUnload()]]>
-</content>
-                                                </script>
-                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
-                                                <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
-                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
-                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
-                                                <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
-                                                <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
-                                            </Box>
-                                            <Box name="Localized Text" id="5" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="114" y="68">
-                                                <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
-                                                <script language="4">
-                                                    <content>
-                                                        <![CDATA[# /!\ Generated content. Do not edit!
-class MyClass(GeneratedClass):
-	def __init__(self):
-		try: # disable autoBind
-			GeneratedClass.__init__(self, False)
-		except TypeError: # if NAOqi < 1.14
-			GeneratedClass.__init__( self )
-
-		self.tts = ALProxy("ALTextToSpeech")
-		self.sentences = {
-			"Chinese" : " 你好 ",
-			"English" : " Hello ",
-			"French" : " je n\'ai pas compris ",
-			"German" : " Hallo ",
-			"Italian" : " Ciao ",
-			"Japanese" : " こんにちは ",
-			"Korean" : " 안녕하세요 ",
-			"Portuguese" : " Olá ",
-			"Brazilian" : " Olá ",
-			"Spanish" : " Hola ",
-			"Arabic" : " مرحبا ",
-			"Polish" : " Cześć ",
-			"Czech" : " Ahoj ",
-			"Dutch" : " Hallo ",
-			"Danish" : " Hej ",
-			"Finnish" : " Hei ",
-			"Swedish" : " Hallå ",
-			"Russian" : " Привет ",
-			"Turkish" : " Merhaba "
-		}
-
-	def onInput_onStart(self):
-		sDefaultLang = self.tts.getLanguage()
-		self.onStopped(self.sentences[sDefaultLang])]]>
-</content>
-                                                </script>
-                                                <pluginContent>
-                                                    <chinese>
-                                                        <![CDATA[你好]]>
-</chinese>
-                                                    <english>
-                                                        <![CDATA[Hello]]>
-</english>
-                                                    <french>
-                                                        <![CDATA[je n'ai pas compris]]>
-</french>
-                                                    <german>
-                                                        <![CDATA[Hallo]]>
-</german>
-                                                    <italian>
-                                                        <![CDATA[Ciao]]>
-</italian>
-                                                    <japanese>
-                                                        <![CDATA[こんにちは]]>
-</japanese>
-                                                    <korean>
-                                                        <![CDATA[안녕하세요]]>
-</korean>
-                                                    <portuguese>
-                                                        <![CDATA[Olá]]>
-</portuguese>
-                                                    <brazilian>
-                                                        <![CDATA[Olá]]>
-</brazilian>
-                                                    <spanish>
-                                                        <![CDATA[Hola]]>
-</spanish>
-                                                    <arabic>
-                                                        <![CDATA[مرحبا]]>
-</arabic>
-                                                    <polish>
-                                                        <![CDATA[Cześć]]>
-</polish>
-                                                    <czech>
-                                                        <![CDATA[Ahoj]]>
-</czech>
-                                                    <dutch>
-                                                        <![CDATA[Hallo]]>
-</dutch>
-                                                    <danish>
-                                                        <![CDATA[Hej]]>
-</danish>
-                                                    <finnish>
-                                                        <![CDATA[Hei]]>
-</finnish>
-                                                    <swedish>
-                                                        <![CDATA[Hallå]]>
-</swedish>
-                                                    <russian>
-                                                        <![CDATA[Привет]]>
-</russian>
-                                                    <turkish>
-                                                        <![CDATA[Merhaba]]>
-</turkish>
-                                                    <language>2</language>
-                                                </pluginContent>
-                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
-                                                <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
-                                            </Box>
-                                            <Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" />
-                                            <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
-                                            <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
-                                        </Diagram>
-                                    </BehaviorKeyframe>
-                                </BehaviorLayer>
-                            </Timeline>
-                            <Resource name="Speech" type="Lock" timeout="0" />
-                        </Box>
-                        <Box name="Say (2)" id="5" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="115" y="252">
+                        <Box name="Say (2)" id="5" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="241" y="9">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -542,84 +256,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="188" y="809">
-                            <bitmap>media/images/box/interaction/choice.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[# /!\ Generated content. Do not edit!
-class MyClass(GeneratedClass):
-	def __init__(self):
-		try: # disable autoBind
-		  GeneratedClass.__init__(self, False)
-		except TypeError: # if NAOqi < 1.14
-		  GeneratedClass.__init__( self )
-
-	def onInput_onStart(self, p):
-		p = self.typeConversion(p)
-		if(p == self.typeConversion("un")):
-			self.output_1(p)
-		elif(p == self.typeConversion("deux")):
-			self.output_2(p)
-		elif(p == self.typeConversion("trois")):
-			self.output_3(p)
-		elif(p == self.typeConversion("quatre")):
-			self.output_4(p)
-		elif(p == self.typeConversion("cinq")):
-			self.output_5(p)
-		elif(p == self.typeConversion("six")):
-			self.output_6(p)
-		elif(p == self.typeConversion("sept")):
-			self.output_7(p)
-		elif(p == self.typeConversion("huit")):
-			self.output_8(p)
-		elif(p == self.typeConversion("neuf")):
-			self.output_9(p)
-		elif(p == self.typeConversion("dix")):
-			self.output_10(p)
-		else:
-			self.onDefault()
-
-	def typeConversion(self, p):
-		try:
-			p = float(p)
-			pint = int(p)
-			if( p == pint ):
-				p = pint
-		except:
-			p = str(p)
-		return p]]>
-</content>
-                            </script>
-                            <pluginContent>
-                                <keywords>
-                                    <keyword>&quot;un&quot;</keyword>
-                                    <keyword>&quot;deux&quot;</keyword>
-                                    <keyword>&quot;trois&quot;</keyword>
-                                    <keyword>&quot;quatre&quot;</keyword>
-                                    <keyword>&quot;cinq&quot;</keyword>
-                                    <keyword>&quot;six&quot;</keyword>
-                                    <keyword>&quot;sept&quot;</keyword>
-                                    <keyword>&quot;huit&quot;</keyword>
-                                    <keyword>&quot;neuf&quot;</keyword>
-                                    <keyword>&quot;dix&quot;</keyword>
-                                    <keyword></keyword>
-                                </keywords>
-                            </pluginContent>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="onStart" type="3" type_size="1" nature="1" inner="0" tooltip="Value to test." id="2" />
-                            <Output name="onDefault" type="1" type_size="1" nature="2" inner="0" tooltip="If the input value does not match any value set on the box." id="3" />
-                            <Output name="output_1" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="4" />
-                            <Output name="output_2" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="5" />
-                            <Output name="output_3" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="6" />
-                            <Output name="output_4" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="7" />
-                            <Output name="output_5" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="8" />
-                            <Output name="output_6" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="9" />
-                            <Output name="output_7" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="10" />
-                            <Output name="output_8" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="11" />
-                            <Output name="output_9" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="12" />
-                            <Output name="output_10" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="13" />
-                        </Box>
-                        <Box name="Say (3)" id="7" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="786" y="233">
+                        <Box name="Say (3)" id="7" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="458" y="225">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -820,7 +457,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (4)" id="8" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="791" y="332">
+                        <Box name="Say (4)" id="8" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="463" y="324">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1021,7 +658,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (5)" id="9" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="791" y="435">
+                        <Box name="Say (5)" id="9" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="463" y="427">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1222,7 +859,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (6)" id="10" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="790" y="630">
+                        <Box name="Say (6)" id="10" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="462" y="622">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1423,7 +1060,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (7)" id="11" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="796" y="730">
+                        <Box name="Say (7)" id="11" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="468" y="722">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1624,7 +1261,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (8)" id="12" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="798" y="830">
+                        <Box name="Say (8)" id="12" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="470" y="822">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1825,7 +1462,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (9)" id="13" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="790" y="528">
+                        <Box name="Say (9)" id="13" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="462" y="520">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2026,7 +1663,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (10)" id="14" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="802" y="924">
+                        <Box name="Say (10)" id="14" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="474" y="916">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2227,7 +1864,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (11)" id="15" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="802" y="1024">
+                        <Box name="Say (11)" id="15" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="474" y="1016">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2428,7 +2065,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Number Edit (1)" id="18" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="927" y="219">
+                        <Box name="Number Edit (1)" id="18" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="599" y="211">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2448,7 +2085,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (2)" id="19" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="926" y="320">
+                        <Box name="Number Edit (2)" id="19" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="598" y="312">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2468,7 +2105,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (3)" id="20" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="921" y="425">
+                        <Box name="Number Edit (3)" id="20" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="593" y="417">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2488,7 +2125,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (4)" id="21" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="929" y="520">
+                        <Box name="Number Edit (4)" id="21" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="601" y="512">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2508,7 +2145,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (5)" id="22" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="937" y="628">
+                        <Box name="Number Edit (5)" id="22" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="609" y="620">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2528,7 +2165,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (6)" id="23" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="928" y="726">
+                        <Box name="Number Edit (6)" id="23" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="600" y="718">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2548,7 +2185,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (7)" id="24" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="924" y="826">
+                        <Box name="Number Edit (7)" id="24" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="596" y="818">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2568,7 +2205,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (8)" id="25" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="940" y="923">
+                        <Box name="Number Edit (8)" id="25" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="612" y="915">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2588,7 +2225,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Number Edit (9)" id="26" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="945" y="1024">
+                        <Box name="Number Edit (9)" id="26" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="617" y="1016">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2608,7 +2245,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Say Text" id="30" localization="8" tooltip="Say the text received on its input." x="1361" y="13">
+                        <Box name="Say Text" id="30" localization="8" tooltip="Say the text received on its input." x="969" y="35">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2664,7 +2301,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="1522" y="34">
+                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="1124" y="78">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2865,7 +2502,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1374" y="201">
+                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1066" y="271">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2917,7 +2554,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Max value" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="0" max="1000" tooltip="The maximum number you can get." id="5" />
                             <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
                         </Box>
-                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1452" y="420">
+                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1168" y="410">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2973,7 +2610,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1300" y="568">
+                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1034" y="504">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3004,7 +2641,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1554" y="223">
+                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1405" y="73">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3035,7 +2672,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Say (1)" id="4" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="784" y="128">
+                        <Box name="Say (1)" id="4" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="456" y="120">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3236,7 +2873,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Number Edit" id="17" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="930" y="142">
+                        <Box name="Number Edit" id="17" localization="8" tooltip="Send the number you entered when the input is stimulated." plugin="numberedit_plugin" x="602" y="134">
                             <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3256,7 +2893,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="1520" y="645">
+                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="1295" y="569">
                             <bitmap>media/images/box/interaction/ear.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3341,7 +2978,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
                             <Resource name="Speech recognition" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Get Data" id="33" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1679" y="290">
+                        <Box name="Get Data" id="33" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1375" y="212">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3372,7 +3009,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Get Data (1)" id="34" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1685" y="408">
+                        <Box name="Get Data (1)" id="34" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1381" y="330">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3403,7 +3040,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1807" y="123">
+                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1512" y="262">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3444,7 +3081,637 @@ class MyClass(GeneratedClass):
                             <Input name="Multiplier" type="2" type_size="1" nature="1" inner="0" tooltip="The multiplier." id="3" />
                             <Output name="output_Product" type="2" type_size="1" nature="2" inner="0" tooltip="The product." id="4" />
                         </Box>
-                        <Box name="Say Text (2)" id="36" localization="8" tooltip="Say the text received on its input." x="1878" y="624">
+                        <Box name="Reconnaissance nombre" id="37" localization="8" tooltip="NAO écoute le nombre sur lequel on veut travailler" x="149" y="290">
+                            <bitmap>media/images/box/box-diagram.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="Speech Reco._onStart" type="1" type_size="1" nature="2" inner="0" tooltip="This input has been automatically generated&#x0A;by converting several boxes into a single box." id="2" />
+                            <Input name="Speech Reco._onStop" type="1" type_size="1" nature="3" inner="0" tooltip="This input has been automatically generated&#x0A;by converting several boxes into a single box." id="3" />
+                            <Output name="SwitchCase_output_2" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="4" />
+                            <Output name="SwitchCase_output_3" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="5" />
+                            <Output name="SwitchCase_output_4" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="6" />
+                            <Output name="SwitchCase_output_5" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="7" />
+                            <Output name="SwitchCase_output_6" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="8" />
+                            <Output name="SwitchCase_output_7" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="9" />
+                            <Output name="SwitchCase_output_8" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="10" />
+                            <Output name="SwitchCase_output_9" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="11" />
+                            <Output name="SwitchCase_output_10" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="12" />
+                            <Output name="SwitchCase_output_1" type="0" type_size="1" nature="2" inner="0" tooltip="This output has been automatically generated&#x0A;by converting several boxes into a single box." id="13" />
+                            <Timeline enable="0">
+                                <BehaviorLayer name="behavior_layer1">
+                                    <BehaviorKeyframe name="keyframe1" index="1">
+                                        <Diagram>
+                                            <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="173" y="607">
+                                                <bitmap>media/images/box/interaction/ear.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+        try:
+            self.asr = ALProxy("ALSpeechRecognition")
+        except Exception as e:
+            self.asr = None
+            self.logger.error(e)
+        self.memory = ALProxy("ALMemory")
+
+    def onLoad(self):
+        from threading import Lock
+        self.bIsRunning = False
+        self.mutex = Lock()
+        self.hasPushed = False
+        self.hasSubscribed = False
+        self.BIND_PYTHON(self.getName(), "onWordRecognized")
+
+    def onUnload(self):
+        from threading import Lock
+        self.mutex.acquire()
+        try:
+            if (self.bIsRunning):
+                if (self.hasSubscribed):
+                    self.memory.unsubscribeToEvent("WordRecognized", self.getName())
+                if (self.hasPushed and self.asr):
+                    self.asr.popContexts()
+        except RuntimeError, e:
+            self.mutex.release()
+            raise e
+        self.bIsRunning = False;
+        self.mutex.release()
+
+    def onInput_onStart(self):
+        from threading import Lock
+        self.mutex.acquire()
+        if(self.bIsRunning):
+            self.mutex.release()
+            return
+        self.bIsRunning = True
+        try:
+            if self.asr:
+                self.asr.setVisualExpression(self.getParameter("Visual expression"))
+                self.asr.pushContexts()
+            self.hasPushed = True
+            if self.asr:
+                self.asr.setVocabulary( self.getParameter("Word list").split(';'), self.getParameter("Enable word spotting") )
+            self.memory.subscribeToEvent("WordRecognized", self.getName(), "onWordRecognized")
+            self.hasSubscribed = True
+        except RuntimeError, e:
+            self.mutex.release()
+            self.onUnload()
+            raise e
+        self.mutex.release()
+
+    def onInput_onStop(self):
+        if( self.bIsRunning ):
+            self.onUnload()
+            self.onStopped()
+
+    def onWordRecognized(self, key, value, message):
+        if(len(value) > 1 and value[1] >= self.getParameter("Confidence threshold (%)")/100.):
+            self.wordRecognized(value[0]) #~ activate output of the box
+        else:
+            self.onNothing()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
+                                                <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
+                                                <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
+                                                <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un;deux;trois;quatre;cinq;six;sept;huit;neuf:dix" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
+                                                <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
+                                                <Parameter name="Visual expression" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Use the LEDs to show feedbacks from the robot during the recognition.&#x0A;&#x0A;For example:&#x0A;- Eyes leds get blue and turn when the speech recognition is launched.&#x0A;- They get yellow when the robot hears someone talking and analyses what it heard.&#x0A;- They flash in green when the robot understood and flash in red otherwise." id="9" />
+                                                <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
+                                                <Resource name="Speech recognition" type="Lock" timeout="0" />
+                                            </Box>
+                                            <Box name="Say" id="3" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="336" y="404">
+                                                <bitmap>media/images/box/interaction/say.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+
+    def onLoad(self):
+        self.bIsRunning = False
+
+    def onUnload(self):
+        self.bIsRunning = False
+
+    def onInput_onStart(self):
+        self.bIsRunning = True
+
+    def onInput_onStop(self):
+        if( self.bIsRunning ):
+            self.onUnload()
+            self.onStopped()]]>
+</content>
+                                                </script>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
+                                                <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
+                                                <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished or stopped." id="4" />
+                                                <Parameter name="Voice shaping (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.&#x0A;&#x0A;!Warning! This feature is not available yet in Japanese, Chinese and Korean.' id="5" />
+                                                <Parameter name="Speed (%)" inherits_from_parent="0" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed.&#x0A;&#x0A;!Warning! This feature is not available yet in Japanese, Chinese and Korean." id="6" />
+                                                <Timeline enable="0">
+                                                    <BehaviorLayer name="behavior_layer1">
+                                                        <BehaviorKeyframe name="keyframe1" index="1">
+                                                            <Diagram>
+                                                                <Box name="Say Text" id="2" localization="8" tooltip="Say the text received on its input." x="422" y="65">
+                                                                    <bitmap>media/images/box/interaction/say.png</bitmap>
+                                                                    <script language="4">
+                                                                        <content>
+                                                                            <![CDATA[import time
+
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+        self.tts = ALProxy('ALTextToSpeech')
+        self.ttsStop = ALProxy('ALTextToSpeech', True) #Create another proxy as wait is blocking if audioout is remote
+
+    def onLoad(self):
+        self.bIsRunning = False
+        self.ids = []
+
+    def onUnload(self):
+        for id in self.ids:
+            try:
+                self.ttsStop.stop(id)
+            except:
+                pass
+        while( self.bIsRunning ):
+            time.sleep( 0.2 )
+
+    def onInput_onStart(self, p):
+        self.bIsRunning = True
+        try:
+            sentence = "\RSPD="+ str( self.getParameter("Speed (%)") ) + "\ "
+            sentence += "\VCT="+ str( self.getParameter("Voice shaping (%)") ) + "\ "
+            sentence += str(p)
+            sentence +=  "\RST\ "
+            id = self.tts.post.say(str(sentence))
+            self.ids.append(id)
+            self.tts.wait(id, 0)
+        finally:
+            try:
+                self.ids.remove(id)
+            except:
+                pass
+            if( self.ids == [] ):
+                self.onStopped() # activate output of the box
+                self.bIsRunning = False
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                                                                    </script>
+                                                                    <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                                                                    <Input name="onStart" type="3" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this Input." id="2" />
+                                                                    <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this Input." id="3" />
+                                                                    <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when Box behavior is finished." id="4" />
+                                                                    <Parameter name="Voice shaping (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="150" tooltip='Used to modify at runtime the voice feature (tone, speed). In a slighty&#x0A;different way than pitch and speed, it gives a kind of &quot;gender or age&#x0A;modification&quot; effect.&#x0A;&#x0A;For instance, a quite good male derivation of female voice can be&#x0A;obtained setting this parameter to 78%.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the&#x0A;speed parameter. For example, if you want to decrease by 20% the voice&#x0A;shaping, you will have to increase by 20% the speed to keep a constant&#x0A;average speed.' id="5" />
+                                                                    <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
+                                                                </Box>
+                                                                <Box name="Localized Text" id="5" localization="8" tooltip="Send on the output the text associated with the robot&apos;s current voice language.&#x0A;You can display and edit the text associated with any language by&#x0A;selecting the language in the combobox.&#x0A;&#x0A;!!Warning!! The text sent on the output is NOT the displayed one but the one&#x0A;associated with the robot&apos;s current voice language." plugin="localizationbox_plugin" x="114" y="68">
+                                                                    <bitmap>media/images/box/interaction/vocabulary.png</bitmap>
+                                                                    <script language="4">
+                                                                        <content>
+                                                                            <![CDATA[# /!\ Generated content. Do not edit!
+class MyClass(GeneratedClass):
+	def __init__(self):
+		try: # disable autoBind
+			GeneratedClass.__init__(self, False)
+		except TypeError: # if NAOqi < 1.14
+			GeneratedClass.__init__( self )
+
+		self.tts = ALProxy("ALTextToSpeech")
+		self.sentences = {
+			"Chinese" : " 你好 ",
+			"English" : " Hello ",
+			"French" : " je n\'ai pas compris ",
+			"German" : " Hallo ",
+			"Italian" : " Ciao ",
+			"Japanese" : " こんにちは ",
+			"Korean" : " 안녕하세요 ",
+			"Portuguese" : " Olá ",
+			"Brazilian" : " Olá ",
+			"Spanish" : " Hola ",
+			"Arabic" : " مرحبا ",
+			"Polish" : " Cześć ",
+			"Czech" : " Ahoj ",
+			"Dutch" : " Hallo ",
+			"Danish" : " Hej ",
+			"Finnish" : " Hei ",
+			"Swedish" : " Hallå ",
+			"Russian" : " Привет ",
+			"Turkish" : " Merhaba "
+		}
+
+	def onInput_onStart(self):
+		sDefaultLang = self.tts.getLanguage()
+		self.onStopped(self.sentences[sDefaultLang])]]>
+</content>
+                                                                    </script>
+                                                                    <pluginContent>
+                                                                        <chinese>
+                                                                            <![CDATA[你好]]>
+</chinese>
+                                                                        <english>
+                                                                            <![CDATA[Hello]]>
+</english>
+                                                                        <french>
+                                                                            <![CDATA[je n'ai pas compris]]>
+</french>
+                                                                        <german>
+                                                                            <![CDATA[Hallo]]>
+</german>
+                                                                        <italian>
+                                                                            <![CDATA[Ciao]]>
+</italian>
+                                                                        <japanese>
+                                                                            <![CDATA[こんにちは]]>
+</japanese>
+                                                                        <korean>
+                                                                            <![CDATA[안녕하세요]]>
+</korean>
+                                                                        <portuguese>
+                                                                            <![CDATA[Olá]]>
+</portuguese>
+                                                                        <brazilian>
+                                                                            <![CDATA[Olá]]>
+</brazilian>
+                                                                        <spanish>
+                                                                            <![CDATA[Hola]]>
+</spanish>
+                                                                        <arabic>
+                                                                            <![CDATA[مرحبا]]>
+</arabic>
+                                                                        <polish>
+                                                                            <![CDATA[Cześć]]>
+</polish>
+                                                                        <czech>
+                                                                            <![CDATA[Ahoj]]>
+</czech>
+                                                                        <dutch>
+                                                                            <![CDATA[Hallo]]>
+</dutch>
+                                                                        <danish>
+                                                                            <![CDATA[Hej]]>
+</danish>
+                                                                        <finnish>
+                                                                            <![CDATA[Hei]]>
+</finnish>
+                                                                        <swedish>
+                                                                            <![CDATA[Hallå]]>
+</swedish>
+                                                                        <russian>
+                                                                            <![CDATA[Привет]]>
+</russian>
+                                                                        <turkish>
+                                                                            <![CDATA[Merhaba]]>
+</turkish>
+                                                                        <language>2</language>
+                                                                    </pluginContent>
+                                                                    <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                                    <Input name="onStart" type="1" type_size="1" nature="2" inner="0" tooltip="Data is sent on the output when this input is stimulated." id="2" />
+                                                                    <Output name="onStopped" type="3" type_size="1" nature="1" inner="0" tooltip="Data sent when asked." id="3" />
+                                                                </Box>
+                                                                <Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="4" />
+                                                                <Link inputowner="5" indexofinput="2" outputowner="0" indexofoutput="2" />
+                                                                <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="3" />
+                                                            </Diagram>
+                                                        </BehaviorKeyframe>
+                                                    </BehaviorLayer>
+                                                </Timeline>
+                                                <Resource name="Speech" type="Lock" timeout="0" />
+                                            </Box>
+                                            <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="188" y="809">
+                                                <bitmap>media/images/box/interaction/choice.png</bitmap>
+                                                <script language="4">
+                                                    <content>
+                                                        <![CDATA[# /!\ Generated content. Do not edit!
+class MyClass(GeneratedClass):
+	def __init__(self):
+		try: # disable autoBind
+		  GeneratedClass.__init__(self, False)
+		except TypeError: # if NAOqi < 1.14
+		  GeneratedClass.__init__( self )
+
+	def onInput_onStart(self, p):
+		p = self.typeConversion(p)
+		if(p == self.typeConversion("un")):
+			self.output_1(p)
+		elif(p == self.typeConversion("deux")):
+			self.output_2(p)
+		elif(p == self.typeConversion("trois")):
+			self.output_3(p)
+		elif(p == self.typeConversion("quatre")):
+			self.output_4(p)
+		elif(p == self.typeConversion("cinq")):
+			self.output_5(p)
+		elif(p == self.typeConversion("six")):
+			self.output_6(p)
+		elif(p == self.typeConversion("sept")):
+			self.output_7(p)
+		elif(p == self.typeConversion("huit")):
+			self.output_8(p)
+		elif(p == self.typeConversion("neuf")):
+			self.output_9(p)
+		elif(p == self.typeConversion("dix")):
+			self.output_10(p)
+		else:
+			self.onDefault()
+
+	def typeConversion(self, p):
+		try:
+			p = float(p)
+			pint = int(p)
+			if( p == pint ):
+				p = pint
+		except:
+			p = str(p)
+		return p]]>
+</content>
+                                                </script>
+                                                <pluginContent>
+                                                    <keywords>
+                                                        <keyword>&quot;un&quot;</keyword>
+                                                        <keyword>&quot;deux&quot;</keyword>
+                                                        <keyword>&quot;trois&quot;</keyword>
+                                                        <keyword>&quot;quatre&quot;</keyword>
+                                                        <keyword>&quot;cinq&quot;</keyword>
+                                                        <keyword>&quot;six&quot;</keyword>
+                                                        <keyword>&quot;sept&quot;</keyword>
+                                                        <keyword>&quot;huit&quot;</keyword>
+                                                        <keyword>&quot;neuf&quot;</keyword>
+                                                        <keyword>&quot;dix&quot;</keyword>
+                                                        <keyword></keyword>
+                                                    </keywords>
+                                                </pluginContent>
+                                                <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                                                <Input name="onStart" type="3" type_size="1" nature="1" inner="0" tooltip="Value to test." id="2" />
+                                                <Output name="onDefault" type="1" type_size="1" nature="2" inner="0" tooltip="If the input value does not match any value set on the box." id="3" />
+                                                <Output name="output_1" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="4" />
+                                                <Output name="output_2" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="5" />
+                                                <Output name="output_3" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="6" />
+                                                <Output name="output_4" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="7" />
+                                                <Output name="output_5" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="8" />
+                                                <Output name="output_6" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="9" />
+                                                <Output name="output_7" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="10" />
+                                                <Output name="output_8" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="11" />
+                                                <Output name="output_9" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="12" />
+                                                <Output name="output_10" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="13" />
+                                            </Box>
+                                            <Link inputowner="2" indexofinput="2" outputowner="3" indexofoutput="4" />
+                                            <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="3" />
+                                            <Link inputowner="6" indexofinput="2" outputowner="2" indexofoutput="5" />
+                                            <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
+                                            <Link inputowner="0" indexofinput="4" outputowner="6" indexofoutput="5" />
+                                            <Link inputowner="0" indexofinput="5" outputowner="6" indexofoutput="6" />
+                                            <Link inputowner="0" indexofinput="6" outputowner="6" indexofoutput="7" />
+                                            <Link inputowner="0" indexofinput="7" outputowner="6" indexofoutput="8" />
+                                            <Link inputowner="0" indexofinput="8" outputowner="6" indexofoutput="9" />
+                                            <Link inputowner="0" indexofinput="9" outputowner="6" indexofoutput="10" />
+                                            <Link inputowner="0" indexofinput="10" outputowner="6" indexofoutput="11" />
+                                            <Link inputowner="0" indexofinput="11" outputowner="6" indexofoutput="12" />
+                                            <Link inputowner="0" indexofinput="12" outputowner="6" indexofoutput="13" />
+                                            <Link inputowner="0" indexofinput="13" outputowner="6" indexofoutput="4" />
+                                        </Diagram>
+                                    </BehaviorKeyframe>
+                                </BehaviorLayer>
+                            </Timeline>
+                        </Box>
+                        <Box name="Insert Data (2)" id="2" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1516" y="409">
+                            <bitmap>media/images/box/sensors/STM.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+        pass
+
+    def onLoad(self):
+        self.memory = ALProxy("ALMemory")
+
+    def onUnload(self):
+        self.memory = None
+
+    def onInput_onStart(self, p):
+        self.memory.insertData(self.getParameter("key"), p)
+        self.onStopped(p)
+
+    def onInput_onStop(self):
+        self.onUnload() #~ it is recommended to call onUnload of this box in a onStop method, as the code written in onUnload is used to stop the box as well
+        pass]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="0" type_size="1" nature="2" inner="0" tooltip="Receives the value to be inserted in ALMemory." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onStopped" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished. It contains the inserted value in ALMemory." id="4" />
+                            <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
+                            <Parameter name="key" inherits_from_parent="0" content_type="3" value="Result" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
+                        </Box>
+                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="1313" y="775">
+                            <bitmap>media/images/box/interaction/choice.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[# /!\ Generated content. Do not edit!
+class MyClass(GeneratedClass):
+	def __init__(self):
+		try: # disable autoBind
+		  GeneratedClass.__init__(self, False)
+		except TypeError: # if NAOqi < 1.14
+		  GeneratedClass.__init__( self )
+
+	def onInput_onStart(self, p):
+		p = self.typeConversion(p)
+		if(p == self.typeConversion("un")):
+			self.output_1(p)
+		elif(p == self.typeConversion("deux")):
+			self.output_2(p)
+		elif(p == self.typeConversion("trois")):
+			self.output_3(p)
+		elif(p == self.typeConversion("quatre")):
+			self.output_4(p)
+		elif(p == self.typeConversion("cinq")):
+			self.output_5(p)
+		elif(p == self.typeConversion("six")):
+			self.output_6(p)
+		elif(p == self.typeConversion("sept")):
+			self.output_7(p)
+		elif(p == self.typeConversion("huit")):
+			self.output_8(p)
+		elif(p == self.typeConversion("neuf")):
+			self.output_9(p)
+		elif(p == self.typeConversion("dix")):
+			self.output_10(p)
+		elif(p == self.typeConversion("onze")):
+			self.output_11(p)
+		elif(p == self.typeConversion("douze")):
+			self.output_12(p)
+		elif(p == self.typeConversion("treize")):
+			self.output_13(p)
+		elif(p == self.typeConversion("quatorze")):
+			self.output_14(p)
+		elif(p == self.typeConversion("quinze")):
+			self.output_15(p)
+		elif(p == self.typeConversion("seize")):
+			self.output_16(p)
+		elif(p == self.typeConversion("dix-sept")):
+			self.output_17(p)
+		elif(p == self.typeConversion("dix-huit")):
+			self.output_18(p)
+		elif(p == self.typeConversion("dix-neuf")):
+			self.output_19(p)
+		elif(p == self.typeConversion("vingt")):
+			self.output_20(p)
+		elif(p == self.typeConversion("vingt et un")):
+			self.output_21(p)
+		elif(p == self.typeConversion("vingt-deux")):
+			self.output_22(p)
+		elif(p == self.typeConversion("vingt-trois")):
+			self.output_23(p)
+		elif(p == self.typeConversion("vingt-quatre")):
+			self.output_24(p)
+		elif(p == self.typeConversion("vingt-cinq")):
+			self.output_25(p)
+		elif(p == self.typeConversion("vingt-six")):
+			self.output_26(p)
+		elif(p == self.typeConversion("vingt-sept")):
+			self.output_27(p)
+		elif(p == self.typeConversion("vingt-huit")):
+			self.output_28(p)
+		elif(p == self.typeConversion("vingt-neuf")):
+			self.output_29(p)
+		elif(p == self.typeConversion("trente")):
+			self.output_30(p)
+		elif(p == self.typeConversion("trente et un")):
+			self.output_31(p)
+		elif(p == self.typeConversion("trente-deux")):
+			self.output_32(p)
+		elif(p == self.typeConversion("trente-trois")):
+			self.output_33(p)
+		elif(p == self.typeConversion("trente-quatre")):
+			self.output_34(p)
+		elif(p == self.typeConversion("trente-cinq")):
+			self.output_35(p)
+		elif(p == self.typeConversion("trente-six")):
+			self.output_36(p)
+		elif(p == self.typeConversion("trente-sept")):
+			self.output_37(p)
+		elif(p == self.typeConversion("trente-huit")):
+			self.output_38(p)
+		elif(p == self.typeConversion("trente-neuf")):
+			self.output_39(p)
+		else:
+			self.onDefault()
+
+	def typeConversion(self, p):
+		try:
+			p = float(p)
+			pint = int(p)
+			if( p == pint ):
+				p = pint
+		except:
+			p = str(p)
+		return p]]>
+</content>
+                            </script>
+                            <pluginContent>
+                                <keywords>
+                                    <keyword>&quot;un&quot;</keyword>
+                                    <keyword>&quot;deux&quot;</keyword>
+                                    <keyword>&quot;trois&quot;</keyword>
+                                    <keyword>&quot;quatre&quot;</keyword>
+                                    <keyword>&quot;cinq&quot;</keyword>
+                                    <keyword>&quot;six&quot;</keyword>
+                                    <keyword>&quot;sept&quot;</keyword>
+                                    <keyword>&quot;huit&quot;</keyword>
+                                    <keyword>&quot;neuf&quot;</keyword>
+                                    <keyword>&quot;dix&quot;</keyword>
+                                    <keyword>&quot;onze&quot;</keyword>
+                                    <keyword>&quot;douze&quot;</keyword>
+                                    <keyword>&quot;treize&quot;</keyword>
+                                    <keyword>&quot;quatorze&quot;</keyword>
+                                    <keyword>&quot;quinze&quot;</keyword>
+                                    <keyword>&quot;seize&quot;</keyword>
+                                    <keyword>&quot;dix-sept&quot;</keyword>
+                                    <keyword>&quot;dix-huit&quot;</keyword>
+                                    <keyword>&quot;dix-neuf&quot;</keyword>
+                                    <keyword>&quot;vingt&quot;</keyword>
+                                    <keyword>&quot;vingt et un&quot;</keyword>
+                                    <keyword>&quot;vingt-deux&quot;</keyword>
+                                    <keyword>&quot;vingt-trois&quot;</keyword>
+                                    <keyword>&quot;vingt-quatre&quot;</keyword>
+                                    <keyword>&quot;vingt-cinq&quot;</keyword>
+                                    <keyword>&quot;vingt-six&quot;</keyword>
+                                    <keyword>&quot;vingt-sept&quot;</keyword>
+                                    <keyword>&quot;vingt-huit&quot;</keyword>
+                                    <keyword>&quot;vingt-neuf&quot;</keyword>
+                                    <keyword>&quot;trente&quot;</keyword>
+                                    <keyword>&quot;trente et un&quot;</keyword>
+                                    <keyword>&quot;trente-deux&quot;</keyword>
+                                    <keyword>&quot;trente-trois&quot;</keyword>
+                                    <keyword>&quot;trente-quatre&quot;</keyword>
+                                    <keyword>&quot;trente-cinq&quot;</keyword>
+                                    <keyword>&quot;trente-six&quot;</keyword>
+                                    <keyword>&quot;trente-sept&quot;</keyword>
+                                    <keyword>&quot;trente-huit&quot;</keyword>
+                                    <keyword>&quot;trente-neuf&quot;</keyword>
+                                    <keyword></keyword>
+                                </keywords>
+                            </pluginContent>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
+                            <Input name="onStart" type="3" type_size="1" nature="1" inner="0" tooltip="Value to test." id="2" />
+                            <Output name="onDefault" type="1" type_size="1" nature="2" inner="0" tooltip="If the input value does not match any value set on the box." id="3" />
+                            <Output name="output_1" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="4" />
+                            <Output name="output_2" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="5" />
+                            <Output name="output_3" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="6" />
+                            <Output name="output_4" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="7" />
+                            <Output name="output_5" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="8" />
+                            <Output name="output_6" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="9" />
+                            <Output name="output_7" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="10" />
+                            <Output name="output_8" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="11" />
+                            <Output name="output_9" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="12" />
+                            <Output name="output_10" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="13" />
+                            <Output name="output_11" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="14" />
+                            <Output name="output_12" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="15" />
+                            <Output name="output_13" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="16" />
+                            <Output name="output_14" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="17" />
+                            <Output name="output_15" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="18" />
+                            <Output name="output_16" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="19" />
+                            <Output name="output_17" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="20" />
+                            <Output name="output_18" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="21" />
+                            <Output name="output_19" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="22" />
+                            <Output name="output_20" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="23" />
+                            <Output name="output_21" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="24" />
+                            <Output name="output_22" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="25" />
+                            <Output name="output_23" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="26" />
+                            <Output name="output_24" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="27" />
+                            <Output name="output_25" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="28" />
+                            <Output name="output_26" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="29" />
+                            <Output name="output_27" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="30" />
+                            <Output name="output_28" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="31" />
+                            <Output name="output_29" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="32" />
+                            <Output name="output_30" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="33" />
+                            <Output name="output_31" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="34" />
+                            <Output name="output_32" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="35" />
+                            <Output name="output_33" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="36" />
+                            <Output name="output_34" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="37" />
+                            <Output name="output_35" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="38" />
+                            <Output name="output_36" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="39" />
+                            <Output name="output_37" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="40" />
+                            <Output name="output_38" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="41" />
+                            <Output name="output_39" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="42" />
+                        </Box>
+                        <Box name="Say Text (2)" id="3" localization="8" tooltip="Say the text received on its input." x="1651" y="905">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3502,20 +3769,17 @@ class MyClass(GeneratedClass):
                         </Box>
                         <Link inputowner="1" indexofinput="2" outputowner="0" indexofoutput="2" />
                         <Link inputowner="5" indexofinput="2" outputowner="1" indexofoutput="3" />
-                        <Link inputowner="2" indexofinput="2" outputowner="5" indexofoutput="4" />
-                        <Link inputowner="7" indexofinput="2" outputowner="6" indexofoutput="5" />
-                        <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="6" />
-                        <Link inputowner="9" indexofinput="2" outputowner="6" indexofoutput="7" />
-                        <Link inputowner="2" indexofinput="2" outputowner="3" indexofoutput="4" />
-                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="3" />
-                        <Link inputowner="2" indexofinput="3" outputowner="2" indexofoutput="5" />
-                        <Link inputowner="6" indexofinput="2" outputowner="2" indexofoutput="5" />
-                        <Link inputowner="13" indexofinput="2" outputowner="6" indexofoutput="8" />
-                        <Link inputowner="10" indexofinput="2" outputowner="6" indexofoutput="9" />
-                        <Link inputowner="11" indexofinput="2" outputowner="6" indexofoutput="10" />
-                        <Link inputowner="12" indexofinput="2" outputowner="6" indexofoutput="11" />
-                        <Link inputowner="14" indexofinput="2" outputowner="6" indexofoutput="12" />
-                        <Link inputowner="15" indexofinput="2" outputowner="6" indexofoutput="13" />
+                        <Link inputowner="37" indexofinput="2" outputowner="5" indexofoutput="4" />
+                        <Link inputowner="7" indexofinput="2" outputowner="37" indexofoutput="4" />
+                        <Link inputowner="8" indexofinput="2" outputowner="37" indexofoutput="5" />
+                        <Link inputowner="9" indexofinput="2" outputowner="37" indexofoutput="6" />
+                        <Link />
+                        <Link inputowner="13" indexofinput="2" outputowner="37" indexofoutput="7" />
+                        <Link inputowner="10" indexofinput="2" outputowner="37" indexofoutput="8" />
+                        <Link inputowner="11" indexofinput="2" outputowner="37" indexofoutput="9" />
+                        <Link inputowner="12" indexofinput="2" outputowner="37" indexofoutput="10" />
+                        <Link inputowner="14" indexofinput="2" outputowner="37" indexofoutput="11" />
+                        <Link inputowner="15" indexofinput="2" outputowner="37" indexofoutput="12" />
                         <Link inputowner="18" indexofinput="2" outputowner="7" indexofoutput="4" />
                         <Link inputowner="19" indexofinput="2" outputowner="8" indexofoutput="4" />
                         <Link inputowner="20" indexofinput="2" outputowner="9" indexofoutput="4" />
@@ -3547,18 +3811,20 @@ class MyClass(GeneratedClass):
                         <Link inputowner="29" indexofinput="2" outputowner="25" indexofoutput="3" />
                         <Link inputowner="29" indexofinput="2" outputowner="26" indexofoutput="3" />
                         <Link inputowner="31" indexofinput="2" outputowner="16" indexofoutput="3" />
-                        <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="37" indexofoutput="13" />
                         <Link inputowner="17" indexofinput="2" outputowner="4" indexofoutput="4" />
                         <Link inputowner="30" indexofinput="2" outputowner="17" indexofoutput="3" />
                         <Link inputowner="29" indexofinput="2" outputowner="17" indexofoutput="3" />
-                        <Link inputowner="32" indexofinput="3" outputowner="32" indexofoutput="5" />
-                        <Link inputowner="32" indexofinput="2" outputowner="27" indexofoutput="4" />
                         <Link inputowner="33" indexofinput="2" outputowner="27" indexofoutput="4" />
                         <Link inputowner="34" indexofinput="2" outputowner="27" indexofoutput="4" />
                         <Link inputowner="35" indexofinput="2" outputowner="33" indexofoutput="4" />
                         <Link inputowner="35" indexofinput="3" outputowner="34" indexofoutput="4" />
-                        <Link inputowner="36" indexofinput="2" outputowner="35" indexofoutput="4" />
-                        <Link inputowner="0" indexofinput="4" outputowner="36" indexofoutput="4" />
+                        <Link inputowner="2" indexofinput="2" outputowner="35" indexofoutput="4" />
+                        <Link inputowner="6" indexofinput="2" outputowner="32" indexofoutput="5" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="27" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="8" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="22" />
+                        <Link inputowner="32" indexofinput="2" outputowner="2" indexofoutput="4" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
