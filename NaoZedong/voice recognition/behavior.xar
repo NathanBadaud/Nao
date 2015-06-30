@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="70.7107">
+                    <Diagram scale="29.7302">
                         <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="151" y="83">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
@@ -256,7 +256,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say Text" id="30" localization="8" tooltip="Say the text received on its input." x="701" y="128">
+                        <Box name="Say Text" id="30" localization="8" tooltip="Say the text received on its input." x="631" y="368">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -312,7 +312,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="1000" y="117">
+                        <Box name="Say (13)" id="28" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="992" y="175">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -513,7 +513,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1198" y="114">
+                        <Box name="Random Int." id="16" localization="8" tooltip="Generate a random integer between a min number and a max number set as&#x0A;parameters.&#x0A;Note that the min and max numbers are included in the range of possible values." x="1190" y="172">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -565,7 +565,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Max value" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="0" max="1000" tooltip="The maximum number you can get." id="5" />
                             <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
                         </Box>
-                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1494" y="249">
+                        <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1364" y="267">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -621,7 +621,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="763" y="839">
+                        <Box name="Insert Data" id="29" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="653" y="559">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -652,7 +652,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1503" y="57">
+                        <Box name="Insert Data (1)" id="31" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1379" y="67">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -683,7 +683,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="2345" y="279">
+                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="2155" y="285">
                             <bitmap>media/images/box/interaction/ear.png</bitmap>
                             <script language="4">
                                 <content>
@@ -768,7 +768,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
                             <Resource name="Speech recognition" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Get Data" id="33" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1955" y="127">
+                        <Box name="Get Data" id="33" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1751" y="153">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -799,7 +799,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberOne" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Get Data (1)" id="34" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1961" y="245">
+                        <Box name="Get Data (1)" id="34" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="1757" y="271">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -830,7 +830,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="2201" y="82">
+                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1987" y="146">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1278,7 +1278,7 @@ class MyClass(GeneratedClass):
                                 </BehaviorLayer>
                             </Timeline>
                         </Box>
-                        <Box name="Insert Data (2)" id="2" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="2195" y="267">
+                        <Box name="Insert Data (2)" id="2" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1991" y="293">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1309,7 +1309,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="Result" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="2586" y="201">
+                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="2344" y="116">
                             <bitmap>media/images/box/interaction/choice.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1323,84 +1323,204 @@ class MyClass(GeneratedClass):
 
 	def onInput_onStart(self, p):
 		p = self.typeConversion(p)
-		if(p == self.typeConversion("un")):
+		if(p == self.typeConversion(1)):
 			self.output_1(p)
-		elif(p == self.typeConversion("deux")):
+		elif(p == self.typeConversion(2)):
 			self.output_2(p)
-		elif(p == self.typeConversion("trois")):
+		elif(p == self.typeConversion(3)):
 			self.output_3(p)
-		elif(p == self.typeConversion("quatre")):
+		elif(p == self.typeConversion(4)):
 			self.output_4(p)
-		elif(p == self.typeConversion("cinq")):
+		elif(p == self.typeConversion(5)):
 			self.output_5(p)
-		elif(p == self.typeConversion("six")):
+		elif(p == self.typeConversion(6)):
 			self.output_6(p)
-		elif(p == self.typeConversion("sept")):
+		elif(p == self.typeConversion(7)):
 			self.output_7(p)
-		elif(p == self.typeConversion("huit")):
+		elif(p == self.typeConversion(8)):
 			self.output_8(p)
-		elif(p == self.typeConversion("neuf")):
+		elif(p == self.typeConversion(9)):
 			self.output_9(p)
-		elif(p == self.typeConversion("dix")):
+		elif(p == self.typeConversion(10)):
 			self.output_10(p)
-		elif(p == self.typeConversion("onze")):
+		elif(p == self.typeConversion(11)):
 			self.output_11(p)
-		elif(p == self.typeConversion("douze")):
+		elif(p == self.typeConversion(12)):
 			self.output_12(p)
-		elif(p == self.typeConversion("treize")):
+		elif(p == self.typeConversion(13)):
 			self.output_13(p)
-		elif(p == self.typeConversion("quatorze")):
+		elif(p == self.typeConversion(14)):
 			self.output_14(p)
-		elif(p == self.typeConversion("quinze")):
+		elif(p == self.typeConversion(15)):
 			self.output_15(p)
-		elif(p == self.typeConversion("seize")):
+		elif(p == self.typeConversion(16)):
 			self.output_16(p)
-		elif(p == self.typeConversion("dix-sept")):
+		elif(p == self.typeConversion(17)):
 			self.output_17(p)
-		elif(p == self.typeConversion("dix-huit")):
+		elif(p == self.typeConversion(18)):
 			self.output_18(p)
-		elif(p == self.typeConversion("dix-neuf")):
+		elif(p == self.typeConversion(19)):
 			self.output_19(p)
-		elif(p == self.typeConversion("vingt")):
+		elif(p == self.typeConversion(20)):
 			self.output_20(p)
-		elif(p == self.typeConversion("vingt et un")):
+		elif(p == self.typeConversion(21)):
 			self.output_21(p)
-		elif(p == self.typeConversion("vingt-deux")):
+		elif(p == self.typeConversion(22)):
 			self.output_22(p)
-		elif(p == self.typeConversion("vingt-trois")):
+		elif(p == self.typeConversion(23)):
 			self.output_23(p)
-		elif(p == self.typeConversion("vingt-quatre")):
+		elif(p == self.typeConversion(24)):
 			self.output_24(p)
-		elif(p == self.typeConversion("vingt-cinq")):
+		elif(p == self.typeConversion(25)):
 			self.output_25(p)
-		elif(p == self.typeConversion("vingt-six")):
+		elif(p == self.typeConversion(26)):
 			self.output_26(p)
-		elif(p == self.typeConversion("vingt-sept")):
+		elif(p == self.typeConversion(27)):
 			self.output_27(p)
-		elif(p == self.typeConversion("vingt-huit")):
+		elif(p == self.typeConversion(28)):
 			self.output_28(p)
-		elif(p == self.typeConversion("vingt-neuf")):
+		elif(p == self.typeConversion(29)):
 			self.output_29(p)
-		elif(p == self.typeConversion("trente")):
+		elif(p == self.typeConversion(30)):
 			self.output_30(p)
-		elif(p == self.typeConversion("trente et un")):
+		elif(p == self.typeConversion(31)):
 			self.output_31(p)
-		elif(p == self.typeConversion("trente-deux")):
+		elif(p == self.typeConversion(32)):
 			self.output_32(p)
-		elif(p == self.typeConversion("trente-trois")):
+		elif(p == self.typeConversion(33)):
 			self.output_33(p)
-		elif(p == self.typeConversion("trente-quatre")):
+		elif(p == self.typeConversion(34)):
 			self.output_34(p)
-		elif(p == self.typeConversion("trente-cinq")):
+		elif(p == self.typeConversion(35)):
 			self.output_35(p)
-		elif(p == self.typeConversion("trente-six")):
+		elif(p == self.typeConversion(36)):
 			self.output_36(p)
-		elif(p == self.typeConversion("trente-sept")):
+		elif(p == self.typeConversion(37)):
 			self.output_37(p)
-		elif(p == self.typeConversion("trente-huit")):
+		elif(p == self.typeConversion(38)):
 			self.output_38(p)
-		elif(p == self.typeConversion("trente-neuf")):
+		elif(p == self.typeConversion(39)):
 			self.output_39(p)
+		elif(p == self.typeConversion(40)):
+			self.output_40(p)
+		elif(p == self.typeConversion(41)):
+			self.output_41(p)
+		elif(p == self.typeConversion(42)):
+			self.output_42(p)
+		elif(p == self.typeConversion(43)):
+			self.output_43(p)
+		elif(p == self.typeConversion(44)):
+			self.output_44(p)
+		elif(p == self.typeConversion(45)):
+			self.output_45(p)
+		elif(p == self.typeConversion(46)):
+			self.output_46(p)
+		elif(p == self.typeConversion(47)):
+			self.output_47(p)
+		elif(p == self.typeConversion(48)):
+			self.output_48(p)
+		elif(p == self.typeConversion(49)):
+			self.output_49(p)
+		elif(p == self.typeConversion(50)):
+			self.output_50(p)
+		elif(p == self.typeConversion(51)):
+			self.output_51(p)
+		elif(p == self.typeConversion(52)):
+			self.output_52(p)
+		elif(p == self.typeConversion(53)):
+			self.output_53(p)
+		elif(p == self.typeConversion(54)):
+			self.output_54(p)
+		elif(p == self.typeConversion(55)):
+			self.output_55(p)
+		elif(p == self.typeConversion(56)):
+			self.output_56(p)
+		elif(p == self.typeConversion(57)):
+			self.output_57(p)
+		elif(p == self.typeConversion(58)):
+			self.output_58(p)
+		elif(p == self.typeConversion(59)):
+			self.output_59(p)
+		elif(p == self.typeConversion(60)):
+			self.output_60(p)
+		elif(p == self.typeConversion(61)):
+			self.output_61(p)
+		elif(p == self.typeConversion(62)):
+			self.output_62(p)
+		elif(p == self.typeConversion(63)):
+			self.output_63(p)
+		elif(p == self.typeConversion(64)):
+			self.output_64(p)
+		elif(p == self.typeConversion(65)):
+			self.output_65(p)
+		elif(p == self.typeConversion(66)):
+			self.output_66(p)
+		elif(p == self.typeConversion(67)):
+			self.output_67(p)
+		elif(p == self.typeConversion(68)):
+			self.output_68(p)
+		elif(p == self.typeConversion(69)):
+			self.output_69(p)
+		elif(p == self.typeConversion(70)):
+			self.output_70(p)
+		elif(p == self.typeConversion(71)):
+			self.output_71(p)
+		elif(p == self.typeConversion(72)):
+			self.output_72(p)
+		elif(p == self.typeConversion(73)):
+			self.output_73(p)
+		elif(p == self.typeConversion(74)):
+			self.output_74(p)
+		elif(p == self.typeConversion(75)):
+			self.output_75(p)
+		elif(p == self.typeConversion(76)):
+			self.output_76(p)
+		elif(p == self.typeConversion(77)):
+			self.output_77(p)
+		elif(p == self.typeConversion(78)):
+			self.output_78(p)
+		elif(p == self.typeConversion(79)):
+			self.output_79(p)
+		elif(p == self.typeConversion(80)):
+			self.output_80(p)
+		elif(p == self.typeConversion(81)):
+			self.output_81(p)
+		elif(p == self.typeConversion(82)):
+			self.output_82(p)
+		elif(p == self.typeConversion(83)):
+			self.output_83(p)
+		elif(p == self.typeConversion(84)):
+			self.output_84(p)
+		elif(p == self.typeConversion(85)):
+			self.output_85(p)
+		elif(p == self.typeConversion(86)):
+			self.output_86(p)
+		elif(p == self.typeConversion(87)):
+			self.output_87(p)
+		elif(p == self.typeConversion(89)):
+			self.output_88(p)
+		elif(p == self.typeConversion(90)):
+			self.output_89(p)
+		elif(p == self.typeConversion(91)):
+			self.output_90(p)
+		elif(p == self.typeConversion(92)):
+			self.output_91(p)
+		elif(p == self.typeConversion(93)):
+			self.output_92(p)
+		elif(p == self.typeConversion(94)):
+			self.output_93(p)
+		elif(p == self.typeConversion(95)):
+			self.output_94(p)
+		elif(p == self.typeConversion(96)):
+			self.output_95(p)
+		elif(p == self.typeConversion(97)):
+			self.output_96(p)
+		elif(p == self.typeConversion(98)):
+			self.output_97(p)
+		elif(p == self.typeConversion(99)):
+			self.output_98(p)
+		elif(p == self.typeConversion(100)):
+			self.output_99(p)
 		else:
 			self.onDefault()
 
@@ -1417,45 +1537,105 @@ class MyClass(GeneratedClass):
                             </script>
                             <pluginContent>
                                 <keywords>
-                                    <keyword>&quot;un&quot;</keyword>
-                                    <keyword>&quot;deux&quot;</keyword>
-                                    <keyword>&quot;trois&quot;</keyword>
-                                    <keyword>&quot;quatre&quot;</keyword>
-                                    <keyword>&quot;cinq&quot;</keyword>
-                                    <keyword>&quot;six&quot;</keyword>
-                                    <keyword>&quot;sept&quot;</keyword>
-                                    <keyword>&quot;huit&quot;</keyword>
-                                    <keyword>&quot;neuf&quot;</keyword>
-                                    <keyword>&quot;dix&quot;</keyword>
-                                    <keyword>&quot;onze&quot;</keyword>
-                                    <keyword>&quot;douze&quot;</keyword>
-                                    <keyword>&quot;treize&quot;</keyword>
-                                    <keyword>&quot;quatorze&quot;</keyword>
-                                    <keyword>&quot;quinze&quot;</keyword>
-                                    <keyword>&quot;seize&quot;</keyword>
-                                    <keyword>&quot;dix-sept&quot;</keyword>
-                                    <keyword>&quot;dix-huit&quot;</keyword>
-                                    <keyword>&quot;dix-neuf&quot;</keyword>
-                                    <keyword>&quot;vingt&quot;</keyword>
-                                    <keyword>&quot;vingt et un&quot;</keyword>
-                                    <keyword>&quot;vingt-deux&quot;</keyword>
-                                    <keyword>&quot;vingt-trois&quot;</keyword>
-                                    <keyword>&quot;vingt-quatre&quot;</keyword>
-                                    <keyword>&quot;vingt-cinq&quot;</keyword>
-                                    <keyword>&quot;vingt-six&quot;</keyword>
-                                    <keyword>&quot;vingt-sept&quot;</keyword>
-                                    <keyword>&quot;vingt-huit&quot;</keyword>
-                                    <keyword>&quot;vingt-neuf&quot;</keyword>
-                                    <keyword>&quot;trente&quot;</keyword>
-                                    <keyword>&quot;trente et un&quot;</keyword>
-                                    <keyword>&quot;trente-deux&quot;</keyword>
-                                    <keyword>&quot;trente-trois&quot;</keyword>
-                                    <keyword>&quot;trente-quatre&quot;</keyword>
-                                    <keyword>&quot;trente-cinq&quot;</keyword>
-                                    <keyword>&quot;trente-six&quot;</keyword>
-                                    <keyword>&quot;trente-sept&quot;</keyword>
-                                    <keyword>&quot;trente-huit&quot;</keyword>
-                                    <keyword>&quot;trente-neuf&quot;</keyword>
+                                    <keyword>1</keyword>
+                                    <keyword>2</keyword>
+                                    <keyword>3</keyword>
+                                    <keyword>4</keyword>
+                                    <keyword>5</keyword>
+                                    <keyword>6</keyword>
+                                    <keyword>7</keyword>
+                                    <keyword>8</keyword>
+                                    <keyword>9</keyword>
+                                    <keyword>10</keyword>
+                                    <keyword>11</keyword>
+                                    <keyword>12</keyword>
+                                    <keyword>13</keyword>
+                                    <keyword>14</keyword>
+                                    <keyword>15</keyword>
+                                    <keyword>16</keyword>
+                                    <keyword>17</keyword>
+                                    <keyword>18</keyword>
+                                    <keyword>19</keyword>
+                                    <keyword>20</keyword>
+                                    <keyword>21</keyword>
+                                    <keyword>22</keyword>
+                                    <keyword>23</keyword>
+                                    <keyword>24</keyword>
+                                    <keyword>25</keyword>
+                                    <keyword>26</keyword>
+                                    <keyword>27</keyword>
+                                    <keyword>28</keyword>
+                                    <keyword>29</keyword>
+                                    <keyword>30</keyword>
+                                    <keyword>31</keyword>
+                                    <keyword>32</keyword>
+                                    <keyword>33</keyword>
+                                    <keyword>34</keyword>
+                                    <keyword>35</keyword>
+                                    <keyword>36</keyword>
+                                    <keyword>37</keyword>
+                                    <keyword>38</keyword>
+                                    <keyword>39</keyword>
+                                    <keyword>40</keyword>
+                                    <keyword>41</keyword>
+                                    <keyword>42</keyword>
+                                    <keyword>43</keyword>
+                                    <keyword>44</keyword>
+                                    <keyword>45</keyword>
+                                    <keyword>46</keyword>
+                                    <keyword>47</keyword>
+                                    <keyword>48</keyword>
+                                    <keyword>49</keyword>
+                                    <keyword>50</keyword>
+                                    <keyword>51</keyword>
+                                    <keyword>52</keyword>
+                                    <keyword>53</keyword>
+                                    <keyword>54</keyword>
+                                    <keyword>55</keyword>
+                                    <keyword>56</keyword>
+                                    <keyword>57</keyword>
+                                    <keyword>58</keyword>
+                                    <keyword>59</keyword>
+                                    <keyword>60</keyword>
+                                    <keyword>61</keyword>
+                                    <keyword>62</keyword>
+                                    <keyword>63</keyword>
+                                    <keyword>64</keyword>
+                                    <keyword>65</keyword>
+                                    <keyword>66</keyword>
+                                    <keyword>67</keyword>
+                                    <keyword>68</keyword>
+                                    <keyword>69</keyword>
+                                    <keyword>70</keyword>
+                                    <keyword>71</keyword>
+                                    <keyword>72</keyword>
+                                    <keyword>73</keyword>
+                                    <keyword>74</keyword>
+                                    <keyword>75</keyword>
+                                    <keyword>76</keyword>
+                                    <keyword>77</keyword>
+                                    <keyword>78</keyword>
+                                    <keyword>79</keyword>
+                                    <keyword>80</keyword>
+                                    <keyword>81</keyword>
+                                    <keyword>82</keyword>
+                                    <keyword>83</keyword>
+                                    <keyword>84</keyword>
+                                    <keyword>85</keyword>
+                                    <keyword>86</keyword>
+                                    <keyword>87</keyword>
+                                    <keyword>89</keyword>
+                                    <keyword>90</keyword>
+                                    <keyword>91</keyword>
+                                    <keyword>92</keyword>
+                                    <keyword>93</keyword>
+                                    <keyword>94</keyword>
+                                    <keyword>95</keyword>
+                                    <keyword>96</keyword>
+                                    <keyword>97</keyword>
+                                    <keyword>98</keyword>
+                                    <keyword>99</keyword>
+                                    <keyword>100</keyword>
                                     <keyword></keyword>
                                 </keywords>
                             </pluginContent>
@@ -1501,8 +1681,68 @@ class MyClass(GeneratedClass):
                             <Output name="output_37" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="40" />
                             <Output name="output_38" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="41" />
                             <Output name="output_39" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="42" />
+                            <Output name="output_40" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="43" />
+                            <Output name="output_41" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="44" />
+                            <Output name="output_42" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="45" />
+                            <Output name="output_43" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="46" />
+                            <Output name="output_44" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="47" />
+                            <Output name="output_45" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="48" />
+                            <Output name="output_46" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="49" />
+                            <Output name="output_47" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="50" />
+                            <Output name="output_48" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="51" />
+                            <Output name="output_49" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="52" />
+                            <Output name="output_50" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="53" />
+                            <Output name="output_51" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="54" />
+                            <Output name="output_52" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="55" />
+                            <Output name="output_53" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="56" />
+                            <Output name="output_54" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="57" />
+                            <Output name="output_55" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="58" />
+                            <Output name="output_56" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="59" />
+                            <Output name="output_57" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="60" />
+                            <Output name="output_58" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="61" />
+                            <Output name="output_59" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="62" />
+                            <Output name="output_60" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="63" />
+                            <Output name="output_61" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="64" />
+                            <Output name="output_62" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="65" />
+                            <Output name="output_63" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="66" />
+                            <Output name="output_64" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="67" />
+                            <Output name="output_65" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="68" />
+                            <Output name="output_66" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="69" />
+                            <Output name="output_67" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="70" />
+                            <Output name="output_68" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="71" />
+                            <Output name="output_69" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="72" />
+                            <Output name="output_70" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="73" />
+                            <Output name="output_71" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="74" />
+                            <Output name="output_72" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="75" />
+                            <Output name="output_73" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="76" />
+                            <Output name="output_74" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="77" />
+                            <Output name="output_75" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="78" />
+                            <Output name="output_76" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="79" />
+                            <Output name="output_77" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="80" />
+                            <Output name="output_78" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="81" />
+                            <Output name="output_79" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="82" />
+                            <Output name="output_80" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="83" />
+                            <Output name="output_81" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="84" />
+                            <Output name="output_82" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="85" />
+                            <Output name="output_83" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="86" />
+                            <Output name="output_84" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="87" />
+                            <Output name="output_85" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="88" />
+                            <Output name="output_86" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="89" />
+                            <Output name="output_87" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="90" />
+                            <Output name="output_88" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="91" />
+                            <Output name="output_89" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="92" />
+                            <Output name="output_90" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="93" />
+                            <Output name="output_91" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="94" />
+                            <Output name="output_92" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="95" />
+                            <Output name="output_93" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="96" />
+                            <Output name="output_94" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="97" />
+                            <Output name="output_95" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="98" />
+                            <Output name="output_96" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="99" />
+                            <Output name="output_97" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="100" />
+                            <Output name="output_98" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="101" />
+                            <Output name="output_99" type="0" type_size="1" nature="2" inner="0" tooltip="This IO has been automatically added by box. Read box tooltip for more information." id="102" />
                         </Box>
-                        <Box name="Say Text (2)" id="3" localization="8" tooltip="Say the text received on its input." x="3063" y="550">
+                        <Box name="Say Text (2)" id="3" localization="8" tooltip="Say the text received on its input." x="3176" y="951">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1558,7 +1798,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Wait For Signals" id="36" localization="8" tooltip="Wait for both inputs to be stimulated before stimulating its output." x="741" y="375">
+                        <Box name="Wait For Signals" id="36" localization="8" tooltip="Wait for both inputs to be stimulated before stimulating its output." x="821" y="457">
                             <bitmap>media/images/box/wait.png</bitmap>
                             <script language="4">
                                 <content>
@@ -1594,7 +1834,7 @@ class MyClass(GeneratedClass):
                             <Input name="signal2" type="1" type_size="1" nature="1" inner="0" tooltip="Second signal to wait." id="3" />
                             <Output name="signalsReceived" type="1" type_size="1" nature="2" inner="0" tooltip="Signal sent when both inputs have been stimulated." id="4" />
                         </Box>
-                        <Box name="Wait For Signals (1)" id="38" localization="8" tooltip="Wait for both inputs to be stimulated before stimulating its output." x="1786" y="133">
+                        <Box name="Wait For Signals (1)" id="38" localization="8" tooltip="Wait for both inputs to be stimulated before stimulating its output." x="1582" y="159">
                             <bitmap>media/images/box/wait.png</bitmap>
                             <script language="4">
                                 <content>
@@ -4015,6 +4255,66 @@ class MyClass(GeneratedClass):
                         <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="40" />
                         <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="41" />
                         <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="42" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="43" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="44" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="45" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="46" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="47" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="48" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="49" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="50" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="51" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="52" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="53" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="54" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="55" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="56" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="57" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="58" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="59" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="60" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="62" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="61" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="64" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="63" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="65" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="66" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="67" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="68" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="69" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="70" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="71" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="72" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="73" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="74" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="75" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="76" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="77" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="78" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="79" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="80" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="81" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="82" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="83" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="84" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="85" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="86" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="87" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="88" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="89" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="90" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="91" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="92" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="93" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="94" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="95" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="96" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="97" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="98" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="99" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="100" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="101" />
+                        <Link inputowner="3" indexofinput="2" outputowner="6" indexofoutput="102" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
