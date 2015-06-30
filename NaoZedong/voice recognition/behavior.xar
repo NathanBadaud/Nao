@@ -4806,7 +4806,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Divide" id="12" localization="8" tooltip="Divide the first input value by the second one and send the result on the output." x="2969" y="498">
+                        <Box name="Divide" id="12" localization="8" tooltip="Divide the first input value by the second one and send the result on the output." x="2952" y="735">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -4849,47 +4849,6 @@ class MyClass(GeneratedClass):
                             <Input name="Dividend" type="2" type_size="1" nature="1" inner="0" tooltip="The dividend." id="2" />
                             <Input name="Divisor" type="2" type_size="1" nature="1" inner="0" tooltip="The divisor." id="3" />
                             <Output name="output_Quotient" type="2" type_size="1" nature="2" inner="0" tooltip="The quotient." id="4" />
-                        </Box>
-                        <Box name="Multiply (1)" id="14" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="2974" y="713">
-                            <bitmap>media/images/box/box-script.png</bitmap>
-                            <script language="4">
-                                <content>
-                                    <![CDATA[import random
-
-class MyClass(GeneratedClass):
-    def __init__(self):
-        GeneratedClass.__init__(self, False)
-        self.rMultiplier = 2.0
-        self.bMultiplicand = False
-        self.bMultiplier = False
-        self.rMultiplicand = 2.0
-
-    def onUnload(self):
-        #puts code for box cleanup here
-        pass
-
-    def onInput_Multiplicand(self, rVal ):
-        self.rMultiplicand = float(rVal)
-        self.bMultiplicand = True
-        self.process()
-
-    def onInput_Multiplier(self, rVal ):
-        self.rMultiplier = float(rVal)
-        self.bMultiplier = True
-        self.process()
-
-    def process(self):
-        if self.bMultiplicand and self.bMultiplier:
-            rRes = self.rMultiplicand * self.rMultiplier
-            self.bMultiplicand = False
-            self.bMultiplier = False
-            self.output_Product( rRes )]]>
-</content>
-                            </script>
-                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
-                            <Input name="Multiplicand" type="2" type_size="1" nature="1" inner="0" tooltip="The multiplicand." id="2" />
-                            <Input name="Multiplier" type="2" type_size="1" nature="1" inner="0" tooltip="The multiplier." id="3" />
-                            <Output name="output_Product" type="2" type_size="1" nature="2" inner="0" tooltip="The product." id="4" />
                         </Box>
                         <Box name="Get Data (2)" id="9" localization="8" tooltip="Retrieves from NAOqi&apos;s shared memory the given value at the given key." x="2787" y="785">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
@@ -5006,11 +4965,8 @@ class MyClass(GeneratedClass):
                         <Link inputowner="32" indexofinput="2" outputowner="4" indexofoutput="4" />
                         <Link inputowner="7" indexofinput="2" outputowner="10" indexofoutput="3" />
                         <Link inputowner="11" indexofinput="2" outputowner="10" indexofoutput="4" />
-                        <Link inputowner="10" indexofinput="2" outputowner="14" indexofoutput="4" />
                         <Link inputowner="13" indexofinput="2" outputowner="8" indexofoutput="4" />
                         <Link inputowner="9" indexofinput="2" outputowner="8" indexofoutput="4" />
-                        <Link inputowner="14" indexofinput="2" outputowner="13" indexofoutput="4" />
-                        <Link inputowner="14" indexofinput="3" outputowner="9" indexofoutput="4" />
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="4" />
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="5" />
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="6" />
@@ -5110,6 +5066,9 @@ class MyClass(GeneratedClass):
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="100" />
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="101" />
                         <Link inputowner="8" indexofinput="2" outputowner="6" indexofoutput="102" />
+                        <Link inputowner="12" indexofinput="2" outputowner="13" indexofoutput="4" />
+                        <Link inputowner="12" indexofinput="3" outputowner="9" indexofoutput="4" />
+                        <Link inputowner="10" indexofinput="2" outputowner="12" indexofoutput="4" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
