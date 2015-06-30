@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="50">
+                    <Diagram scale="42.0448">
                         <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="110" y="5">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
@@ -2893,7 +2893,7 @@ class MyClass(GeneratedClass):
                             <Input name="onStart" type="1" type_size="1" nature="1" inner="0" tooltip="To send the number on the output." id="2" />
                             <Output name="onStopped" type="2" type_size="1" nature="2" inner="0" tooltip="The number you entered." id="3" />
                         </Box>
-                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="1295" y="569">
+                        <Box name="Speech Reco. (1)" id="32" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="1119" y="709">
                             <bitmap>media/images/box/interaction/ear.png</bitmap>
                             <script language="4">
                                 <content>
@@ -2972,7 +2972,7 @@ class MyClass(GeneratedClass):
                             <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when box behavior is finished." id="4" />
                             <Output name="wordRecognized" type="3" type_size="1" nature="2" inner="0" tooltip="Word recognized with a confidence higher than the threshold set in the box parameters." id="5" />
                             <Output name="onNothing" type="1" type_size="1" nature="2" inner="0" tooltip="Nothing has been understood." id="6" />
-                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un;deux;trois;quatre;cinq;six;sept;huit;neuf:dix" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
+                            <Parameter name="Word list" inherits_from_parent="0" content_type="3" value="un;deux;trois;quatre;cinq;six;sept;huit;neuf;dix;onze;douze;treize;quatorze;quinze;seize;dix-sept;dix-huit;dix-neuf;vingt;vingt-et-un;vingt-deux;vingt-trois;vingt-quatre;vingt-cinq;vingt-six;vingt-sept;vingt-huit;vingt-neuf;trente;trente-et-un;trente-deux;trente-trois;trente-quatre;trente-cinq;trente-six;trente-sept;trente-huit;trente-neuf;quarante;quarante-et-un;quarante-deux;quarante-trois;quarante-quatre;quarante-cinq;quarante-six;quarante-sept;quarante-huit;quarante-neuf;cinquante;cinquante-et-un;cinquante-deux;cinquante-trois;cinquante-quatre;cinquante-cinq;cinquante-six;cinquante-sept;cinquante-huit;cinquante-neuf;soixante;soixante-et-un;soixante-deux;soixante-trois;soixante-quatre;soixante-cinq;soixante-six;soixante-sept;soixante-huit;soixante-neuf;soixante-dix;soixante-et-onze;soixante-douze;soixante-treize;soixante-quatorze;soixante-quinze;soixante-seize;soixante-dix-sept;soixante-dix-huit;soixante-dix-neuf;quatre-vingts;quatre-vingt-un;quatre-vingt-deux;quatre-vingt-trois;quatre-vingt-quatre;quatre-vingt-cinq;quatre-vingt-six;quatre-vingt-sept;quatre-vingt-huit;quatre-vingt-neuf;quatre-vingt-dix;quatre-vingt-onze;quatre-vingt-douze;quatre-vingt-treize;quatre-vingt-quatorze;quatre-vingt-quinze;quatre-vingt-seize;quatre-vingt-dix-sept;quatre-vingt-dix-huit;quatre-vingt-dix-neuf;" default_value="yes;no" custom_choice="0" tooltip="Try to recognize a word from a list of words set in the box parameters." id="7" />
                             <Parameter name="Confidence threshold (%)" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="100" tooltip="If the confidence associated with the word recognized is below this threshold, the robot will consider that it is not recognized." id="8" />
                             <Parameter name="Visual expression" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Use the LEDs to show feedbacks from the robot during the recognition.&#x0A;&#x0A;For example:&#x0A;- Eyes leds get blue and turn when the speech recognition is launched.&#x0A;- They get yellow when the robot hears someone talking and analyses what it heard.&#x0A;- They flash in green when the robot understood and flash in red otherwise." id="9" />
                             <Parameter name="Enable word spotting" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="If this option is not activated the robot will only understand exact expressions. If it is, he will spot the exact expressions even in the middle of a sentence.&#x0A;&#x0A;!!Warning!! This option is only available with the speech recognition module using Nuance (ie in Atom version of the robot)." id="10" />
@@ -3040,7 +3040,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="numberTwo" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1512" y="262">
+                        <Box name="Multiply" id="35" localization="8" tooltip="Multiply the first input value by the second one and send the result on the output." x="1562" y="212">
                             <bitmap>media/images/box/box-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3104,7 +3104,7 @@ class MyClass(GeneratedClass):
                             <Timeline enable="0">
                                 <BehaviorLayer name="behavior_layer1">
                                     <BehaviorKeyframe name="keyframe1" index="1">
-                                        <Diagram>
+                                        <Diagram scale="35.3553">
                                             <Box name="Speech Reco." id="2" localization="8" tooltip="Recognize a word from a list of words set in the box parameters.&#x0A;&#x0A;V1.1.0&#x0A;" x="173" y="607">
                                                 <bitmap>media/images/box/interaction/ear.png</bitmap>
                                                 <script language="4">
@@ -3487,7 +3487,7 @@ class MyClass(GeneratedClass):
                                 </BehaviorLayer>
                             </Timeline>
                         </Box>
-                        <Box name="Insert Data (2)" id="2" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1516" y="409">
+                        <Box name="Insert Data (2)" id="2" localization="8" tooltip="Stores in NAOqi&apos;s shared memory the given value at the given key." x="1526" y="411">
                             <bitmap>media/images/box/sensors/STM.png</bitmap>
                             <script language="4">
                                 <content>
@@ -3518,7 +3518,7 @@ class MyClass(GeneratedClass):
                             <Output name="onError" type="3" type_size="1" nature="1" inner="0" tooltip="Output when error is raised by the behavior. Contains the error message." id="5" />
                             <Parameter name="key" inherits_from_parent="0" content_type="3" value="Result" default_value="MyApplication/MyData" custom_choice="0" tooltip="" id="6" />
                         </Box>
-                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="1313" y="775">
+                        <Box name="Switch Case" id="6" localization="8" tooltip="Test input value and stimulate the output matching to this value. If there is no&#x0A;matching output, the default output (onDefault) is stimulated.&#x0A;&#x0A;You can edit a case by left double-clicking on the line. You can add a&#x0A;case by right clicking on a line and selecting &apos;Insert a row&apos;. You can delete&#x0A;a case by right clicking on a line and selecting &apos;Remove a row&apos;." plugin="dispatcher_plugin" x="1836" y="166">
                             <bitmap>media/images/box/interaction/choice.png</bitmap>
                             <script language="4">
                                 <content>
