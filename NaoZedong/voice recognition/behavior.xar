@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="84.0896">
+                    <Diagram scale="70.7107">
                         <Box name="Set Speech Lang." id="1" localization="8" tooltip="Select the language you would like the robot to speak. Any following call to&#x0A;ALTextToSpeech (Say box for instance) will use this language." x="255" y="69">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
@@ -563,7 +563,7 @@ class MyClass(GeneratedClass):
                             <Output name="output_RandomValue" type="2" type_size="1" nature="2" inner="0" tooltip="The random value obtained." id="3" />
                             <Parameter name="Min value" inherits_from_parent="0" content_type="1" value="1" default_value="0" min="0" max="1000" tooltip="The minimum value you can get." id="4" />
                             <Parameter name="Max value" inherits_from_parent="0" content_type="1" value="10" default_value="10" min="0" max="1000" tooltip="The maximum number you can get." id="5" />
-                            <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="0" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
+                            <Parameter name="Shuffle" inherits_from_parent="0" content_type="0" value="1" default_value="0" tooltip="When this option is selected the box will give all the numbers between min and&#x0A;max before giving the same number twice." id="6" />
                         </Box>
                         <Box name="Say Text (1)" id="27" localization="8" tooltip="Say the text received on its input." x="1364" y="267">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
