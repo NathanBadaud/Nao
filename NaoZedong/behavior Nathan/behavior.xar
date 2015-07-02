@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="84.0896">
+                    <Diagram scale="59.4604">
                         <Box name="Say" id="1" localization="8" tooltip="Say some text. Note that you must open the box to enter the text." x="339" y="247">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
